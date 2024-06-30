@@ -177,7 +177,8 @@ import barChart from '@/assets/images/bar-chart.svg'
     position: relative;
   }
 
-  .item-1 {
+  .item-1,
+  .item-2 {
     margin-bottom: 3rem;
 
     @media (min-width: 640px) {
