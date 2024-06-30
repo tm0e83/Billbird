@@ -1,0 +1,47 @@
+// Colors
+$white: rgb(255 255 255);
+
+$gray-50: rgb(249 250 251);
+$gray-100: rgb(243 244 246);
+$gray-200: rgb(229 231 235);
+$gray-300: rgb(209 213 219);
+$gray-400: rgb(156 163 175);
+$gray-500: rgb(107 114 128);
+$gray-600: rgb(75 85 99);
+
+$red-100: rgb(254 226 226);
+$red-500: rgb(239 68 68);
+$red-600: rgb(220 38 38);
+$red-700: rgb(185 28 28);
+
+$sky-400: rgb(56 189 248);
+$sky-600: rgb(2 132 199);
+$sky-700: rgb(3 105 161);
+
+$slate-50: rgb(248 250 252);
+$slate-300: rgb(203 213 225);
+$slate-800: rgb(30 41 59);
+
+$emerald-500: rgb(16 185 129);
+$emerald-600: rgb(5 150 105);
+
+$primary-color: $emerald-500;
+$info-color: $sky-700;
+
+// Breakpoints
+$sm: 640px;
+$md: 768px;
+$lg: 1024px;
+$xl: 1280px;
+$xxl: 1536px;
+
+// Links
+$link-color: $primary-color;
+$link-hover-color: rgb(5 150 105);
+
+// font
+$font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+  monospace;
+$font-color: rgb(75 85 99);
+
+$global-radius: 0.35rem;

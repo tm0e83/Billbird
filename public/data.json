@@ -1,0 +1,138 @@
+{
+  "datagroups": [
+    {
+      "datasets": [
+        {
+          "actualAmount": 277.77,
+          "debitAmount": 324.07083333333327,
+          "id": 5,
+          "interval": "year",
+          "invoiceAmount": 555.55,
+          "invoiceDate": "2022-12-01",
+          "lastInvoiceDate": null,
+          "lastUpdateDate": null,
+          "monthlyAmount": 46.29583333333333,
+          "title": "KFZ",
+          "type": 1,
+          "groupId": 1,
+          "diffAmount": -46.30083333333329,
+          "updateAmount": null,
+          "updateType": "add"
+        }, {
+          "actualAmount": 92.59,
+          "debitAmount": 92.58749999999999,
+          "id": 6,
+          "interval": "year",
+          "invoiceAmount": 123.45,
+          "invoiceDate": "2022-10-12",
+          "lastInvoiceDate": null,
+          "lastUpdateDate": null,
+          "monthlyAmount": 10.2875,
+          "title": "Haftpflicht",
+          "type": 1,
+          "groupId": 1,
+          "diffAmount": 0.002500000000011937,
+          "updateAmount": null,
+          "updateType": "equals"
+        }, {
+          "actualAmount": 148.14,
+          "debitAmount": 74.07333333333334,
+          "id": 7,
+          "interval": "year",
+          "invoiceAmount": 222.22,
+          "invoiceDate": "2023-03-01",
+          "lastInvoiceDate": null,
+          "lastUpdateDate": null,
+          "monthlyAmount": 18.518333333333334,
+          "title": "Zahnzusatz",
+          "type": 1,
+          "groupId": 1,
+          "diffAmount": 74.06666666666665,
+          "updateAmount": null,
+          "updateType": "add"
+        }
+      ],
+      "active": true,
+      "title": "Versicherungen",
+      "id": 1
+    }, {
+      "datasets": [
+        {
+          "actualAmount": 25,
+          "debitAmount": 64.81416666666667,
+          "id": 8,
+          "interval": "year",
+          "invoiceAmount": 111.11,
+          "invoiceDate": "2022-12-15",
+          "lastInvoiceDate": null,
+          "lastUpdateDate": null,
+          "monthlyAmount": 9.259166666666667,
+          "title": "ADAC",
+          "type": 1,
+          "groupId": 2,
+          "diffAmount": -39.814166666666665,
+          "updateAmount": null,
+          "updateType": "add"
+        }, {
+          "actualAmount": 18.52,
+          "debitAmount": 18.516666666666666,
+          "id": 9,
+          "interval": "quarter",
+          "invoiceAmount": 55.55,
+          "invoiceDate": "2022-09-01",
+          "lastInvoiceDate": null,
+          "lastUpdateDate": null,
+          "monthlyAmount": 18.516666666666666,
+          "title": "GEZ",
+          "type": 1,
+          "groupId": 2,
+          "diffAmount": 0.0033333333333338544,
+          "updateAmount": null,
+          "updateType": "add"
+        }
+      ],
+      "active": true,
+      "id": 2,
+      "title": "Sonstiges"
+    }, {
+      "datasets": [
+        {
+          "actualAmount": 1111.11,
+          "debitAmount": 1111.11,
+          "id": 10,
+          "interval": "",
+          "invoiceAmount": null,
+          "invoiceDate": null,
+          "lastInvoiceDate": null,
+          "lastUpdateDate": null,
+          "monthlyAmount": 222.22,
+          "title": "Neues Auto",
+          "type": 2,
+          "groupId": 3,
+          "diffAmount": 0,
+          "updateAmount": null,
+          "updateType": "add"
+        }, {
+          "actualAmount": 333.33,
+          "debitAmount": 333.33,
+          "id": 11,
+          "interval": "",
+          "invoiceAmount": null,
+          "invoiceDate": null,
+          "lastInvoiceDate": null,
+          "lastUpdateDate": null,
+          "monthlyAmount": 123.45,
+          "title": "Urlaub",
+          "type": 2,
+          "groupId": 3,
+          "diffAmount": 0,
+          "updateAmount": null,
+          "updateType": "add"
+        }
+      ],
+      "active": true,
+      "id": 3,
+      "title": "Sparen"
+    }
+  ]
+}

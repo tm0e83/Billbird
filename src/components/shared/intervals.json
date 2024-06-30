@@ -1,0 +1,18 @@
+{
+  "month": {
+    "name": "Monat",
+    "months": 1
+  },
+  "quarter": {
+    "name": "Quartal",
+    "months": 3
+  },
+  "year": {
+    "name": "Jahr",
+    "months": 12
+  },
+  "2years": {
+    "name": "2 Jahre",
+    "months": 24
+  }
+}

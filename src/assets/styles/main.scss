@@ -1,0 +1,341 @@
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+
+@import 'variables';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: rgb(229 231 235);
+  color: $font-color;
+  padding: 0;
+  margin: 0;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    'Noto Sans',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji';
+  font-size: 100%;
+  line-height: 1.5;
+}
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  vertical-align: middle;
+}
+
+// @layer components {
+.button {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  // font-size: 100%;
+  font-weight: 700;
+  // line-height: inherit;
+  text-align: center;
+  outline-width: 0px;
+  color: #fff;
+  background-color: rgb(16 185 129);
+  padding: 0.5rem 0.75rem;
+  border-width: 0;
+  border-radius: 0.25rem;
+  cursor: pointer;
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: auto;
+  }
+
+  &:hover {
+    background-color: rgb(5 150 105);
+  }
+
+  &.alert {
+    background-color: $red-500;
+
+    &:hover {
+      background-color: $red-600;
+    }
+  }
+
+  &.secondary {
+    color: $gray-300;
+
+    &:hover {
+      color: $gray-500;
+    }
+  }
+
+  &:not(.hollow) {
+    &[disabled] {
+      color: $gray-500;
+      background-color: $gray-300;
+      cursor: default;
+
+      &:hover {
+        background-color: $gray-300;
+      }
+    }
+  }
+
+  &.hollow {
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+      border-color: $emerald-600;
+      color: $emerald-600;
+    }
+
+    &.alert {
+      border-color: $red-500;
+      color: $red-500;
+
+      &:hover {
+        border-color: $red-600;
+        color: $red-600;
+      }
+    }
+
+    &.secondary {
+      border-color: $gray-300;
+      color: $gray-300;
+
+      &:hover {
+        border-color: $gray-500;
+        color: $gray-500;
+      }
+    }
+  }
+
+  &.clear {
+    border: 0;
+    color: $primary-color;
+    background-color: transparent;
+
+    &:hover {
+      border-color: transparent;
+      color: $emerald-600;
+      background-color: transparent;
+    }
+
+    &.alert {
+      color: $red-500;
+
+      &:hover {
+        color: $red-600;
+      }
+    }
+
+    &.secondary {
+      color: $gray-300;
+
+      &:hover {
+        color: $gray-500;
+      }
+    }
+  }
+
+  &.large {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+// }
+
+input {
+  &[type='text'],
+  &[type='password'],
+  &[type='number'] {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+      opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    background-color: #fff;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    outline: 0;
+    border: 1px solid $gray-300;
+    border-radius: 0.25rem;
+    line-height: 1;
+    font-size: 100%;
+
+    &:hover,
+    &:focus {
+      border-color: $gray-400;
+    }
+  }
+
+  &[type='text'],
+  &[type='number'] {
+    &.negative {
+      color: $red-600;
+    }
+  }
+}
+
+select {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  background-color: #fff;
+  width: 100%;
+  padding: 0.5rem;
+  outline: 0;
+  border: 1px solid $gray-300;
+  border-radius: 0.25rem;
+  font-size: inherit;
+  line-height: 1;
+
+  &:hover,
+  &:focus {
+    border-color: $gray-400;
+  }
+}
+
+option {
+  border-radius: 0;
+}
+
+label {
+  display: block;
+}
+
+p {
+  margin-bottom: 0.75rem;
+}
+
+a {
+  cursor: pointer;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  color: $link-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $link-hover-color;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    transition: none;
+    color: $gray-400;
+
+    &:hover {
+      color: $gray-400;
+    }
+  }
+}
+
+.container {
+  max-width: 100%;
+  margin: auto;
+}
+
+.text-primary {
+  color: $primary-color;
+}
+
+.font-mono {
+  font-family: $font-mono;
+}
+
+.font-color {
+  color: $font-color;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+// Datepicker
+input.dp__input {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  background-color: #fff;
+  width: 100%;
+  padding: 0.5rem 0.5rem 0.5rem 0;
+  outline: 0;
+  border: 1px solid $gray-300;
+  border-radius: 0.25rem;
+  line-height: 1;
+
+  &:focus {
+    border-color: $gray-400;
+  }
+}
+
+// Modal Window
+.modal-head {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+// Datepicker
+.dp__theme_light {
+  --dp-background-color: #ffffff;
+  --dp-text-color: #212121;
+  --dp-hover-color: #f3f3f3;
+  --dp-hover-text-color: #212121;
+  --dp-hover-icon-color: #959595;
+  --dp-primary-color: rgb(16 185 129); // todo: configure tailwind colors!
+  --dp-primary-text-color: #f8f5f5;
+  --dp-secondary-color: #c0c4cc;
+  --dp-border-color: #ddd;
+  --dp-menu-border-color: #ddd;
+  --dp-border-color-hover: #aaaeb7;
+  --dp-disabled-color: #f6f6f6;
+  --dp-scroll-bar-background: #f3f3f3;
+  --dp-scroll-bar-color: #959595;
+  --dp-success-color: #76d275;
+  --dp-success-color-disabled: #a3d9b1;
+  --dp-icon-color: #959595;
+  --dp-danger-color: #ff6f60;
+}
+
+// dropdown menu
+.dropdown-trigger svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: auto;
+}
