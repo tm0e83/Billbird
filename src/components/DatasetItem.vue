@@ -172,7 +172,7 @@ defineExpose({
           -->
         </div>
       </div>
-      <div class="current-value">{{ dataset.actualAmount }}</div>
+      <div class="current-value">{{ toCurrency(dataset.actualAmount) }}</div>
       <div class="menu">
         <DropdownMenu :menuItems="menuItems">
           <DotsVerticalIcon />
