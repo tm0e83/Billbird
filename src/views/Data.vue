@@ -364,12 +364,12 @@ function fillUpdateFields() {
 
     <div class="buttons">
       <button @click="createNewDatagroup" class="button w-full large">
-        <PlusIcon />
-        Neue Datengruppe
+        <span><PlusIcon /></span>
+        <span>Neue Datengruppe</span>
       </button>
       <button @click="createNewDataset" class="button w-full large">
-        <PlusIcon />
-        Neuer Datensatz
+        <span><PlusIcon /></span>
+        <span>Neuer Datensatz</span>
       </button>
     </div>
   </div>
