@@ -182,12 +182,12 @@ defineExpose({
 
     <div class="prop prop-actual-amount">
       <span class="label">Ist</span>
-      <span>{{ dataset.actualAmount }}</span>
+      <span>{{ toCurrency(dataset.actualAmount) }}</span>
     </div>
 
     <div class="prop prop-debit-amount">
       <span class="label">Soll</span>
-      <span>{{ dataset.debitAmount }}</span>
+      <span>{{ toCurrency(dataset.debitAmount) }}</span>
     </div>
 
     <div class="prop prop-diff-amount">
