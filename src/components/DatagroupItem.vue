@@ -194,6 +194,10 @@ defineExpose({
   background-color: #fff;
   margin-bottom: 1px;
 
+  &.sortable-chosen .head {
+    border: 1px dashed $primary-color;
+  }
+
   &:last-of-type {
     margin-bottom: 0;
   }
@@ -224,7 +228,7 @@ defineExpose({
   }
 
   .drag-handle {
-    cursor: move;
+    cursor: grab;
     padding: 0;
     flex-grow: 0;
     margin-right: 0.25rem;
@@ -316,7 +320,6 @@ defineExpose({
   }
 
   .list {
-    background-color: #fff;
     background-color: $gray-50;
   }
 

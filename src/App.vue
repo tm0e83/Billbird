@@ -5,7 +5,7 @@ import { useStore } from '@/stores/store'
 import githubLogo from '@/assets/images/github-logo.svg'
 import { getAuth, signOut } from 'firebase/auth'
 import { router, publicPages } from './router'
-import { LoginIcon, LogoutIcon } from 'vue-tabler-icons'
+import { LoginIcon, LogoutIcon, SettingsIcon } from 'vue-tabler-icons'
 
 const store = useStore()
 const auth = getAuth()

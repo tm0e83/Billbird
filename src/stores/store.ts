@@ -153,7 +153,7 @@ export const useStore = defineStore({
 
     setUpdateAmount(id, amount) {
       this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.updateAmount = amount ?? 0))
+        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.updateAmount = amount ?? null))
       })
     },
 
