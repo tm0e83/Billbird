@@ -37,11 +37,19 @@
       CSS.
     </p>
 
+    <h2>Was ist inzwischen passiert?</h2>
+    <p>
+      Inzwischen verwende ich Firebase für den Benutzerlogin und als Datenbank. Tailwind habe ich
+      wieder entfernt, weil es mir einfach keinen echten Mehrwert bietet. Leider habe ich privat
+      wenig Zeit mich mit der Weiterentwicklung von BillBird zu beschäftigen. Das Projekt kommt
+      daher immer wieder ins Stocken.
+    </p>
+
     <h2>Was ist für die Zukunft geplant?</h2>
     <p>
-      Vermutlich werde ich zukünftig Firebase für die Datenbank. Vielleicht stelle ich eines Tages
-      auf Typescript um, baue einen Kalender, Login- und Benutzerbereich und verwende Vuetify.
-      Derzeit ist noch alles offen.
+      Da ich in ETFs und Aktien investiert habe und diese Investitionen über meine App pflege,
+      möchte ich zukünftig die aktuellen Börsenkurse für die Berechnung der Vermögenswerte
+      verwenden.
     </p>
   </div>
 </template>

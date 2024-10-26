@@ -89,6 +89,10 @@ function onSort(args) {
   //
 }
 
+function onDragStart(args) {
+  vibrate(10)
+}
+
 defineExpose({
   applyUpdate,
   fillUpdateFields
@@ -144,6 +148,7 @@ defineExpose({
       item-key="id"
       delay="150"
       @change="onSort"
+      @dragStart="onDragStart"
     >
       <template #item="{ element }">
         <DatasetItem

@@ -136,7 +136,7 @@ function onSymbolSearchInput(e) {
         <option value="" style="display: none">Auswählen</option>
         <option value="1">Rechnung</option>
         <option value="2">Sparplan</option>
-        <option value="3">Wertpapier</option>
+        <!--<option value="3">Wertpapier</option>-->
       </select>
     </div>
 

@@ -243,7 +243,7 @@ defineExpose({
           }"
           classes="currency-input text-right"
         />
-        <button @click="applyUpdate" :disabled="!dataset.updateAmount" class="button">
+        <button @click="applyUpdate" :disabled="dataset.updateAmount !== ''" class="button">
           <CheckIcon />
         </button>
       </div>
