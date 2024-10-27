@@ -74,6 +74,10 @@ function loginAsGuest() {
     font-size: 1.5rem;
     line-height: 2rem;
   }
+
+  &.guests {
+    margin-bottom: 2rem;
+  }
 }
 
 .errors {
