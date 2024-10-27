@@ -13,8 +13,8 @@ function deleteDatagroup() {
 
 <template>
   <div>
-    <div class="modal-head text-center">Datengruppe wirklich löschen?</div>
-    <div class="flex justify-between">
+    <div class="modal-head">Datengruppe wirklich löschen?</div>
+    <div class="buttons">
       <button @click="$emit('close')" class="button alert large hollow">Abbrechen</button>
       <button @click="deleteDatagroup" class="button alert large">Löschen</button>
     </div>
@@ -24,4 +24,14 @@ function deleteDatagroup() {
 <style lang="scss" scoped>
 @import '@/assets/styles/variables';
 @import '@/assets/styles/mixins';
+
+.modal-head {
+  text-align: center;
+}
+
+.buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
 </style>
