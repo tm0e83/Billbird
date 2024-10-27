@@ -88,11 +88,7 @@ function fillUpdateFields() {
   datasetRefs.value.map((datasetRef) => datasetRef.fillUpdateField())
 }
 
-function onSort(args) {
-  //
-}
-
-function onDragStart(args) {
+function onDragStart() {
   navigator.vibrate(100)
 }
 
@@ -150,7 +146,6 @@ defineExpose({
       group="datasets"
       item-key="id"
       delay="150"
-      @change="onSort"
       @start="onDragStart"
     >
       <template #item="{ element }">

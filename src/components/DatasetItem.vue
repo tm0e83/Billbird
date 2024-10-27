@@ -281,6 +281,10 @@ defineExpose({
   flex-grow: 1;
   border-bottom: 1px solid $gray-200;
   padding: 0 0.5rem;
+
+  &.sortable-chosen {
+    border: 1px dashed $primary-color;
+  }
 }
 
 .positive {

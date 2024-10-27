@@ -17,6 +17,10 @@ function fillUpdateFields() {
   datagroupRefs.value.map((datagroupRef) => datagroupRef.fillUpdateFields())
 }
 
+function onDragStart() {
+  navigator.vibrate(100)
+}
+
 const hasUpdateAmounts = computed(() => {
   return store.allDatasets.filter((dataset) => !!dataset.updateAmount).length > 0
 })
@@ -39,6 +43,7 @@ defineExpose({
       handle=".drag-handle"
       item-key="id"
       delay="150"
+      @start="onDragStart"
     >
       <template #item="{ element }">
         <DatagroupItem

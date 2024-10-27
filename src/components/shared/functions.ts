@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 import { nextTick, reactive, ref, toRaw, watch, onUpdated } from 'vue'
 
-export const toCurrency = (num: number) => {
+export const toCurrency = (num: number): string => {
   return new Intl.NumberFormat('de-DE', {
     style: 'currency',
     currency: 'EUR'
@@ -12,7 +12,7 @@ export const toCurrency = (num: number) => {
 
 // export const keyTostockSymbol = (symbol: string) => symbol.replace('_', '.')
 
-export const isWeekend = (date: Date) => date.getDay() === 6 || date.getDay() === 0
+export const isWeekend = (date: Date): boolean => date.getDay() === 6 || date.getDay() === 0
 
 // export const getActualAmount = (dataset: any, store: any) => {
 //   if (dataset.type === 3) {

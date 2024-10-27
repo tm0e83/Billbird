@@ -47,14 +47,14 @@ function loginAsGuest() {
         <p>
           <input type="password" placeholder="Password" v-model="password" />
         </p>
-        <button class="button w-full">Einloggen</button>
+        <button class="button w-full large">Einloggen</button>
       </form>
     </div>
 
     <div class="box guests">
       <div class="box-headline">Keine Zugangsdaten?</div>
       <p>Interessierte Besucher können sich das Projekt über den Gastzugang ansehen.</p>
-      <button @click="loginAsGuest" class="button w-full">Als Gast fortfahren</button>
+      <button @click="loginAsGuest" class="button w-full large">Als Gast fortfahren</button>
     </div>
   </div>
 </template>
