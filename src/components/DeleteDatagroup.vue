@@ -15,8 +15,8 @@ function deleteDatagroup() {
   <div>
     <div class="modal-head text-center">Datengruppe wirklich löschen?</div>
     <div class="flex justify-between">
-      <button @click="$emit('close')" class="button alert hollow">Abbrechen</button>
-      <button @click="deleteDatagroup" class="button alert">Löschen</button>
+      <button @click="$emit('close')" class="button alert large hollow">Abbrechen</button>
+      <button @click="deleteDatagroup" class="button alert large">Löschen</button>
     </div>
   </div>
 </template>

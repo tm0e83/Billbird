@@ -15,8 +15,8 @@ function deleteDataset() {
   <div>
     <div class="modal-head text-center">Datensatz wirklich löschen?</div>
     <div class="flex justify-between">
-      <button @click="$emit('close')" class="button alert hollow">Abbrechen</button>
-      <button @click="deleteDataset" class="delete-button button alert">Löschen</button>
+      <button @click="$emit('close')" class="button alert large hollow">Abbrechen</button>
+      <button @click="deleteDataset" class="delete-button button alert large">Löschen</button>
     </div>
   </div>
 </template>

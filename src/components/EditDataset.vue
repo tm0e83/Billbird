@@ -272,8 +272,8 @@ function onSymbolSearchInput(e) {
     </div>
 
     <div class="buttons">
-      <button @click="$emit('close')" class="button hollow">Schließen</button>
-      <button @click="save" class="button">Speichern</button>
+      <button @click="$emit('close')" class="button large hollow">Schließen</button>
+      <button @click="save" class="button large">Speichern</button>
     </div>
   </div>
 </template>
