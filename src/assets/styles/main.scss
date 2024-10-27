@@ -191,6 +191,10 @@ input {
       color: $red-600;
     }
   }
+
+  &::placeholder {
+    color: #ccc;
+  }
 }
 
 select {
