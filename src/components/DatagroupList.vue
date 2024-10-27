@@ -21,6 +21,9 @@ const hasUpdateAmounts = computed(() => {
   return store.allDatasets.filter((dataset) => !!dataset.updateAmount).length > 0
 })
 
+const isPositiveDiff = computed(() => parseFloat(store.totalDiffAmount.toFixed(2)) > 0)
+const isNegativeDiff = computed(() => parseFloat(store.totalDiffAmount.toFixed(2)) < 0)
+
 defineExpose({
   applyUpdate,
   fillUpdateFields
@@ -85,7 +88,14 @@ defineExpose({
       </div>
       <div class="prop prop-diff-amount">
         <span class="label">Differenz</span>
-        <span class="value">{{ toCurrency(store.totalDiffAmount) }}</span>
+        <span
+          class="value"
+          :class="{
+            positive: isPositiveDiff,
+            negative: isNegativeDiff
+          }"
+          >{{ toCurrency(store.totalDiffAmount) }}</span
+        >
       </div>
       <div class="prop prop-menu"></div>
     </div>
@@ -98,6 +108,14 @@ defineExpose({
 
 .outer-list {
   box-shadow: 0 0 2px 0 rgb(99, 99, 99, 0.15);
+}
+
+.positive {
+  color: $green-600;
+}
+
+.negative {
+  color: $red-600;
 }
 
 .list-footer {

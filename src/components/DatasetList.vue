@@ -31,6 +31,9 @@ function deleteDataset(dataset) {
   state.deleteModalVisible = true
 }
 
+const isPositiveDiff = computed(() => parseFloat(totalDiffAmount.value.toFixed(2)) > 0)
+const isNegativeDiff = computed(() => parseFloat(totalDiffAmount.value.toFixed(2)) < 0)
+
 const totalInvoiceAmount = computed(() => {
   return props.datasets.reduce(
     (sum, dataset) => (dataset.invoiceAmount ? (sum += dataset.invoiceAmount) : sum),
@@ -90,7 +93,7 @@ function onSort(args) {
 }
 
 function onDragStart(args) {
-  navigator.vibrate(10)
+  navigator.vibrate(100)
 }
 
 defineExpose({
@@ -164,11 +167,11 @@ defineExpose({
       <div class="prop prop-title"></div>
       <div class="prop prop-invoice-amount">
         <span class="label">Rg.-Betrag</span>
-        <span>{{ toCurrency(totalInvoiceAmount) }}</span>
+        <span class="value">{{ toCurrency(totalInvoiceAmount) }}</span>
       </div>
       <div class="prop prop-monthly-amount">
         <span class="label">Mtl. Betrag</span>
-        <span>{{ toCurrency(totalMonthlyAmount) }}</span>
+        <span class="value">{{ toCurrency(totalMonthlyAmount) }}</span>
       </div>
       <div class="prop prop-invoice-date"></div>
       <div class="prop prop-interval"></div>
@@ -176,7 +179,7 @@ defineExpose({
         <div class="update-amount-inner">
           <div class="amount">
             <span class="label">Update</span>
-            <span>{{ toCurrency(totalUpdateAmount) }}</span>
+            <span class="value">{{ toCurrency(totalUpdateAmount) }}</span>
           </div>
           <button
             @click="applyUpdate"
@@ -190,15 +193,22 @@ defineExpose({
       </div>
       <div class="prop prop-actual-amount">
         <span class="label">Ist</span>
-        <span>{{ toCurrency(totalActualAmount) }}</span>
+        <span class="value">{{ toCurrency(totalActualAmount) }}</span>
       </div>
       <div class="prop prop-debit-amount">
         <span class="label">Soll</span>
-        <span>{{ toCurrency(totalDebitAmount) }}</span>
+        <span class="value">{{ toCurrency(totalDebitAmount) }}</span>
       </div>
       <div class="prop prop-diff-amount">
         <span class="label">Differenz</span>
-        <span>{{ toCurrency(totalDiffAmount) }}</span>
+        <span
+          class="value"
+          :class="{
+            positive: isPositiveDiff,
+            negative: isNegativeDiff
+          }"
+          >{{ toCurrency(totalDiffAmount) }}</span
+        >
       </div>
       <div class="prop prop-menu"></div>
     </div>
@@ -210,6 +220,14 @@ defineExpose({
 
 .list {
   align-items: flex-start;
+}
+
+.positive {
+  color: $green-600;
+}
+
+.negative {
+  color: $red-600;
 }
 
 .list-head {

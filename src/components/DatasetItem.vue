@@ -42,8 +42,8 @@ const menuItems = ref([
 const intervalName = computed(() =>
   props.dataset.type === 1 ? intervals[props.dataset.interval].name : ''
 )
-const isPositiveDiff = computed(() => props.dataset.diffAmount.toFixed(2) > 0)
-const isNegativeDiff = computed(() => props.dataset.diffAmount.toFixed(2) < 0)
+const isPositiveDiff = computed(() => parseFloat(props.dataset.diffAmount.toFixed(2)) > 0)
+const isNegativeDiff = computed(() => parseFloat(props.dataset.diffAmount.toFixed(2)) < 0)
 
 // const actualAmount = computed(() => {
 //   return getActualAmount(props.dataset, stockStore)
@@ -56,6 +56,18 @@ const isNegativeDiff = computed(() => props.dataset.diffAmount.toFixed(2) < 0)
 
 //   return toCurrency(props.dataset.debitAmount)
 // })
+
+const canUpate = computed(() => {
+  if (props.dataset.updateType === 'equals' && !props.dataset.updateAmount === '') {
+    return false
+  }
+
+  if (props.dataset.updateType === 'add' && !props.dataset.updateAmount) {
+    return false
+  }
+
+  return true
+})
 
 function isValidDate(date) {
   return date instanceof Date && date.getTime()
@@ -195,8 +207,8 @@ defineExpose({
       <span
         class="value"
         :class="{
-          'text-green-600': isPositiveDiff,
-          'text-red-600': isNegativeDiff
+          positive: isPositiveDiff,
+          negative: isNegativeDiff
         }"
       >
         {{ Math.floor(dataset.diffAmount) > 0 ? '+' : '' }}{{ toCurrency(dataset.diffAmount) }}
@@ -243,7 +255,7 @@ defineExpose({
           }"
           classes="currency-input text-right"
         />
-        <button @click="applyUpdate" :disabled="dataset.updateAmount !== ''" class="button">
+        <button @click="applyUpdate" :disabled="!canUpate" class="button">
           <CheckIcon />
         </button>
       </div>
@@ -269,6 +281,14 @@ defineExpose({
   flex-grow: 1;
   border-bottom: 1px solid $gray-200;
   padding: 0 0.5rem;
+}
+
+.positive {
+  color: $green-600;
+}
+
+.negative {
+  color: $red-600;
 }
 
 .prop {

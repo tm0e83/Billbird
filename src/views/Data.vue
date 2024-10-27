@@ -386,7 +386,7 @@ body {
 .view-container {
   padding: 0.75rem 0.75rem 0;
   max-width: 2000px;
-  margin: 2rem auto 0;
+  margin: 2rem auto;
 }
 
 .messages {
