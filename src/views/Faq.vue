@@ -55,7 +55,7 @@
       möchte ich zukünftig die aktuellen Börsenkurse für die Berechnung der Vermögenswerte
       verwenden.
     </p>
-    <p>Ideen habe ich viele. Ob ich die Zeit haben werden sie alle umzusetzen, wird sich zeigen.</p>
+    <p>Ideen habe ich viele. Ob ich die Zeit haben werde sie alle umzusetzen, wird sich zeigen.</p>
   </div>
 </template>
 
