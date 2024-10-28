@@ -58,7 +58,7 @@ const isNegativeDiff = computed(() => parseFloat(props.dataset.diffAmount.toFixe
 // })
 
 const canUpate = computed(() => {
-  if (props.dataset.updateType === 'equals' && !props.dataset.updateAmount === '') {
+  if (props.dataset.updateType === 'equals' && typeof props.dataset.updateAmount !== 'number') {
     return false
   }
 

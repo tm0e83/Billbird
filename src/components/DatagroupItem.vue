@@ -95,6 +95,9 @@ const hasUpdateAmounts = computed(() => {
   return props.datagroup.datasets.filter((dataset) => !!dataset.updateAmount).length > 0
 })
 
+const isPositiveDiff = computed(() => totalDiffAmount.value > 0)
+const isNegativeDiff = computed(() => totalDiffAmount.value < 0)
+
 function activate() {
   store.activateDatagroup(props.datagroup.id)
 }
@@ -163,7 +166,14 @@ defineExpose({
         <span title="Soll">{{ toCurrency(totalDebitAmount) }}</span>
       </div>
       <div class="prop prop-diff-amount">
-        <span title="Differenz">{{ toCurrency(totalDiffAmount) }}</span>
+        <span
+          title="Differenz"
+          :class="{
+            positive: isPositiveDiff,
+            negative: isNegativeDiff
+          }"
+          >{{ toCurrency(totalDiffAmount) }}</span
+        >
       </div>
       <div class="prop prop-menu">
         <div class="menu">
@@ -193,6 +203,14 @@ defineExpose({
 .datagroup {
   background-color: #fff;
   margin-bottom: 1px;
+
+  .positive {
+    color: $green-600;
+  }
+
+  .negative {
+    color: $red-600;
+  }
 
   &.sortable-chosen .head {
     border: 1px dashed $primary-color;
