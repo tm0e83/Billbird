@@ -1,6 +1,6 @@
 <script setup>
 import eslintLogo from '@/assets/images/eslint-logo.svg'
-import tailwindcssLogo from '@/assets/images/tailwindcss-logo.svg'
+import typescriptLogo from '@/assets/images/typescript-logo.svg'
 import vuejsLogo from '@/assets/images/vuejs-logo.svg'
 import vitejsLogo from '@/assets/images/vitejs-logo.svg'
 import vitestLogo from '@/assets/images/vitest-logo.svg'
@@ -72,43 +72,51 @@ import barChart from '@/assets/images/bar-chart.svg'
         <div class="headline">Technologie-Stack</div>
         <ul class="content">
           <li>
-            <a href="https://eslint.org/" title="ESLint">
-              <img :src="eslintLogo" alt="Logo" />
-            </a>
-          </li>
-          <li>
-            <a href="https://tailwindcss.com/" title="Tailwind CSS">
-              <img :src="tailwindcssLogo" alt="Logo" />
-            </a>
-          </li>
-          <li>
             <a href="https://vuejs.org/" title="Vue.js">
               <img :src="vuejsLogo" alt="Logo" />
+              <div>Vue.js</div>
             </a>
           </li>
           <li>
             <a href="https://vitejs.dev/" title="Vite">
               <img :src="vitejsLogo" alt="Logo" />
+              <div>Vite</div>
             </a>
           </li>
           <li>
             <a href="https://vitest.dev/" title="Vitest">
               <img :src="vitestLogo" alt="Logo" />
-            </a>
-          </li>
-          <li>
-            <a href="https://firebase.google.com/firebase" title="Firebase">
-              <img :src="firebaseLogo" alt="Logo" />
+              <div>Vitest</div>
             </a>
           </li>
           <li>
             <a href="https://pinia.vuejs.org/" title="Pinia">
               <img :src="piniaLogo" alt="Logo" />
+              <div>Pinia</div>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.typescriptlang.org/" title="TypeScript">
+              <img :src="typescriptLogo" alt="Logo" />
+              <div>TypeScript</div>
+            </a>
+          </li>
+          <li>
+            <a href="https://firebase.google.com/firebase" title="Firebase">
+              <img :src="firebaseLogo" alt="Logo" />
+              <div>Firebase</div>
+            </a>
+          </li>
+          <li>
+            <a href="https://eslint.org/" title="ESLint">
+              <img :src="eslintLogo" alt="Logo" />
+              <div>ESLint</div>
             </a>
           </li>
           <li>
             <a href="https://prettier.io/" title="Prettier">
               <img :src="prettierLogo" alt="Logo" />
+              <div>Prettier</div>
             </a>
           </li>
         </ul>
@@ -210,8 +218,8 @@ import barChart from '@/assets/images/bar-chart.svg'
   }
 
   img {
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 175px;
+    max-height: 175px;
     width: 100%;
     height: 100%;
     margin: auto;
@@ -231,18 +239,44 @@ import barChart from '@/assets/images/bar-chart.svg'
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 5rem /* 80px */;
+    gap: 6.5rem 5rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: center;
+
+    li {
+      height: 100%;
+      display: flex;
+    }
 
     @media (min-width: 768px) {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 
+  a {
+    text-decoration: none;
+    display: block;
+    position: relative;
+    flex: 1;
+
+    &>div {
+      margin-top: 0.5rem;
+      text-align: center;
+      color: #fff;
+      font-weight: 600;
+      background-color: black;
+      padding: 0.25rem 0.5rem;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: -2.5rem;
+      border-radius: 2px;
+    }
+  }
+
   img {
-    max-width: 120px;
-    max-height: 120px;
+    max-width: 140px;
+    max-height: 140px;
     width: 100%;
     height: 100%;
     margin: auto;

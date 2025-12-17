@@ -1,29 +1,28 @@
-<script setup>
+<script setup lang="ts">
 import { reactive, ref } from 'vue'
 
-const props = defineProps({
-  show: {
-    type: Boolean,
-    default: true
-  },
-  maxWidth: {
-    type: String,
-    default: '600px'
-  }
+interface Props {
+  show?: boolean
+  maxWidth?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  show: true,
+  maxWidth: '600px'
 })
 
 const emit = defineEmits(['afterLeave', 'close'])
-const outerModal = ref(null)
+const outerModal = ref<HTMLElement | null>(null)
 
 const styles = reactive({
   'max-width': props.maxWidth
 })
 
-function onAfterLeave(e) {
+function onAfterLeave(el: Element) {
   emit('afterLeave')
 }
 
-function onclickOutside(e) {
+function onclickOutside(e: MouseEvent) {
   if (e.target === outerModal.value) {
     emit('close')
   }
@@ -95,8 +94,6 @@ function onclickOutside(e) {
 
   .modal-inner {
     opacity: 0;
-    // --tw-translate-y: -50%;
-    // transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
 </style>

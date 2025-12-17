@@ -1,83 +1,109 @@
 import { defineStore } from 'pinia'
 
-const getAllDatasets = (datagroups) => {
-  return datagroups.reduce((datasets, datagroup) => datasets.concat(datagroup.datasets), [])
+// Type Definitions
+export interface Dataset {
+  id: number
+  title: string
+  groupId: number
+  interval: string
+  type: number
+  invoiceAmount: number
+  invoiceDate: string | null
+  lastInvoiceDate: string | null
+  lastUpdateDate: string | null
+  monthlyAmount: number
+  actualAmount: number
+  debitAmount: number
+  diffAmount: number
+  updateAmount: number | null
+  updateType: string
 }
 
-/**
- *
- * @param {*} state
- * @returns
- */
-const getAllActiveDatasets = (state) => {
+export interface Datagroup {
+  id: number
+  title: string
+  active: boolean
+  datasets: Dataset[]
+}
+
+export interface StoreState {
+  alphavantage: any
+  currentDate: Date
+  datagroups: Datagroup[]
+  uid: string | null
+}
+
+const getAllDatasets = (datagroups: Datagroup[]): Dataset[] => {
+  return datagroups.reduce((datasets, datagroup) => datasets.concat(datagroup.datasets), [] as Dataset[])
+}
+
+const getAllActiveDatasets = (state: StoreState): Dataset[] => {
   return state.datagroups.reduce((datasets, datagroup) => {
     return datagroup.active ? datasets.concat(datagroup.datasets) : datasets
-  }, [])
+  }, [] as Dataset[])
 }
 
 export const useStore = defineStore({
   id: 'general',
 
-  state: () => ({
+  state: (): StoreState => ({
     alphavantage: {} as any,
-    currentDate: new Date() as any,
-    datagroups: [] as any[],
-    uid: null as any
-    // hasUnsavedData: false,
-    // isTouchDevice: false,
+    currentDate: new Date(),
+    datagroups: [],
+    uid: null
   }),
 
   getters: {
-    isLoggedIn(state) {
+    isLoggedIn(): boolean {
       return this.uid !== 'testuser'
     },
 
-    allDatasets(state) {
+    allDatasets(state): Dataset[] {
       return getAllDatasets(state.datagroups)
     },
 
-    nextDatagroupId(state) {
+    nextDatagroupId(state): number {
       if (!state.datagroups.length) return 1
       return Math.max(...state.datagroups.map((datagroup) => datagroup.id)) + 1
     },
 
-    nextDatasetId(state) {
+    nextDatasetId(state): number {
       const allDatasets = getAllDatasets(state.datagroups)
       if (!allDatasets.length) return 1
       return Math.max(...allDatasets.map((dataset) => dataset.id)) + 1
     },
 
-    totalInvoiceAmount(state) {
+    totalInvoiceAmount(state): number {
       return getAllActiveDatasets(state).reduce((sum, dataset) => {
         return dataset.invoiceAmount ? (sum += dataset.invoiceAmount) : sum
       }, 0)
     },
 
-    totalMonthlyAmount(state) {
+    totalMonthlyAmount(state): number {
       return getAllActiveDatasets(state).reduce((sum, dataset) => {
         return dataset.monthlyAmount ? (sum += dataset.monthlyAmount) : sum
       }, 0)
     },
 
-    totalActualAmount(state) {
+    totalActualAmount(state): number {
       return getAllActiveDatasets(state).reduce((sum, dataset) => {
         return dataset.actualAmount ? (sum += dataset.actualAmount) : sum
       }, 0)
     },
 
-    totalDebitAmount(state) {
+    totalDebitAmount(state): number {
       return getAllActiveDatasets(state).reduce((sum, dataset) => {
         return dataset.debitAmount ? (sum += dataset.debitAmount) : sum
       }, 0)
     },
 
-    totalDiffAmount(state) {
+    totalDiffAmount(state): number {
       return getAllActiveDatasets(state).reduce((sum, dataset) => {
         return dataset.diffAmount ? (sum += dataset.diffAmount) : sum
       }, 0)
     },
 
-    totalUpdateAmount(state) {
+    totalUpdateAmount(state): number {
       return getAllActiveDatasets(state).reduce((sum, dataset) => {
         return dataset.updateAmount ? (sum += dataset.updateAmount) : sum
       }, 0)
@@ -85,18 +111,18 @@ export const useStore = defineStore({
   },
 
   actions: {
-    addDataset(dataset) {
-      this.datagroups.map((datagroup: any) => {
+    addDataset(dataset: Dataset) {
+      this.datagroups.forEach((datagroup) => {
         if (datagroup.id === dataset.groupId) datagroup.datasets.push(dataset)
       })
     },
 
-    addDatagroup(datagroup: any) {
+    addDatagroup(datagroup: Datagroup) {
       this.datagroups.push(datagroup)
     },
 
-    deleteDataset(dataset) {
-      this.datagroups.map((datagroup: any) => {
+    deleteDataset(dataset: Dataset) {
+      this.datagroups.forEach((datagroup) => {
         if (datagroup.id === dataset.groupId) {
           datagroup.datasets = datagroup.datasets.filter(
             (currentDataset) => currentDataset.id !== dataset.id
@@ -105,82 +131,82 @@ export const useStore = defineStore({
       })
     },
 
-    deleteDatagroup(id) {
+    deleteDatagroup(id: number) {
       this.datagroups = this.datagroups.filter((datagroup) => datagroup.id !== id)
     },
 
-    addActualAmount(id, amount) {
-      this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.actualAmount += amount ?? 0))
+    addActualAmount(id: number, amount: number) {
+      this.datagroups.forEach((datagroup) => {
+        datagroup.datasets.filter((d) => d.id === id).forEach((d) => (d.actualAmount += amount ?? 0))
       })
     },
 
-    setActualAmount(id, amount) {
-      this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.actualAmount = amount ?? 0))
+    setActualAmount(id: number, amount: number) {
+      this.datagroups.forEach((datagroup) => {
+        datagroup.datasets.filter((d) => d.id === id).forEach((d) => (d.actualAmount = amount ?? 0))
       })
     },
 
-    setDebitAmount(id, amount) {
-      this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.debitAmount = amount ?? 0))
+    setDebitAmount(id: number, amount: number) {
+      this.datagroups.forEach((datagroup) => {
+        datagroup.datasets.filter((d) => d.id === id).forEach((d) => (d.debitAmount = amount ?? 0))
       })
     },
 
-    setDiffAmount(id, amount) {
-      this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.diffAmount = amount))
+    setDiffAmount(id: number, amount: number) {
+      this.datagroups.forEach((datagroup) => {
+        datagroup.datasets.filter((d) => d.id === id).forEach((d) => (d.diffAmount = amount))
       })
     },
 
-    setInvoiceDate(id, dateStr) {
-      this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.invoiceDate = dateStr))
+    setInvoiceDate(id: number, dateStr: string) {
+      this.datagroups.forEach((datagroup) => {
+        datagroup.datasets.filter((d) => d.id === id).forEach((d) => (d.invoiceDate = dateStr))
       })
     },
 
-    setLastInvoiceDate(id, dateStr) {
-      this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.lastInvoiceDate = dateStr))
+    setLastInvoiceDate(id: number, dateStr: string) {
+      this.datagroups.forEach((datagroup) => {
+        datagroup.datasets.filter((d) => d.id === id).forEach((d) => (d.lastInvoiceDate = dateStr))
       })
     },
 
-    setMonthlyAmount(id, amount) {
-      this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.monthlyAmount = amount ?? 0))
+    setMonthlyAmount(id: number, amount: number) {
+      this.datagroups.forEach((datagroup) => {
+        datagroup.datasets.filter((d) => d.id === id).forEach((d) => (d.monthlyAmount = amount ?? 0))
       })
     },
 
-    setUpdateAmount(id, amount) {
-      this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.updateAmount = amount ?? null))
+    setUpdateAmount(id: number, amount: number | null) {
+      this.datagroups.forEach((datagroup) => {
+        datagroup.datasets.filter((d) => d.id === id).forEach((d) => (d.updateAmount = amount ?? null))
       })
     },
 
-    setUpdateType(id, updateType) {
-      this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.filter((d) => d.id === id).map((d) => (d.updateType = updateType))
+    setUpdateType(id: number, updateType: string) {
+      this.datagroups.forEach((datagroup) => {
+        datagroup.datasets.filter((d) => d.id === id).forEach((d) => (d.updateType = updateType))
       })
     },
 
-    replaceDatagroup(datagroup: any) {
-      this.datagroups = this.datagroups.map((currentDatagroup: any) => {
+    replaceDatagroup(datagroup: Datagroup) {
+      this.datagroups = this.datagroups.map((currentDatagroup) => {
         return currentDatagroup.id === datagroup.id ? datagroup : currentDatagroup
       })
     },
 
-    replaceDataset(dataset) {
-      this.datagroups.map((datagroup: any) => {
-        datagroup.datasets.map((set, idx) => {
+    replaceDataset(dataset: Dataset) {
+      this.datagroups.forEach((datagroup) => {
+        datagroup.datasets.forEach((set, idx) => {
           if (set.id === dataset.id) {
             if (datagroup.id === dataset.groupId) {
               datagroup.datasets.splice(idx, 1, dataset)
             } else {
               datagroup.datasets.splice(idx, 1)
 
-              this.datagroups.map((datagroup: any) => {
-                if (datagroup.id === dataset.groupId) {
-                  datagroup.datasets.unshift(dataset)
+              this.datagroups.forEach((dg) => {
+                if (dg.id === dataset.groupId) {
+                  dg.datasets.unshift(dataset)
                 }
               })
             }
@@ -189,22 +215,20 @@ export const useStore = defineStore({
       })
     },
 
-    activateDatagroup(id) {
-      this.datagroups.map((datagroup: any) => {
+    activateDatagroup(id: number) {
+      this.datagroups.forEach((datagroup) => {
         if (datagroup.id === id) {
           datagroup.active = true
         }
       })
-      // this.inactiveDatagroupIds.splice(this.inactiveDatagroupIds.indexOf(id), 1);
     },
 
-    deactivateDatagroup(id) {
-      this.datagroups.map((datagroup: any) => {
+    deactivateDatagroup(id: number) {
+      this.datagroups.forEach((datagroup) => {
         if (datagroup.id === id) {
           datagroup.active = false
         }
       })
-      // this.inactiveDatagroupIds.push(id);
     }
   }
 })

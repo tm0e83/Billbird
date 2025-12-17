@@ -7,7 +7,7 @@ import {
 } from './shared/functions.ts'
 import { useStore } from '@/stores/store'
 // import { useStockStore } from '@/stores/stock-store'
-import { format } from 'date-fns'
+import { format, isValid } from 'date-fns'
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -19,12 +19,17 @@ import {
 } from 'vue-tabler-icons'
 import CurrencyInput from '@/components/CurrencyInput.vue'
 import DropdownMenu from '@/components/DropdownMenu.vue'
+import { trimDecimals } from '@/utils/number'
 
 const props = defineProps(['dataset'])
 const store = useStore()
 // const stockStore = useStockStore()
 const emit = defineEmits(['edit', 'delete'])
 const collapsed = ref(true)
+const updateAmountInput = computed({
+  get: () => props.dataset.updateAmount,
+  set: (value) => store.setUpdateAmount(props.dataset.id, value)
+})
 const menuItems = ref([
   {
     label: 'Ausfüllen',
@@ -42,8 +47,8 @@ const menuItems = ref([
 const intervalName = computed(() =>
   props.dataset.type === 1 ? intervals[props.dataset.interval].name : ''
 )
-const isPositiveDiff = computed(() => parseFloat(props.dataset.diffAmount.toFixed(2)) > 0)
-const isNegativeDiff = computed(() => parseFloat(props.dataset.diffAmount.toFixed(2)) < 0)
+const isPositiveDiff = computed(() => trimDecimals(props.dataset.diffAmount) > 0)
+const isNegativeDiff = computed(() => trimDecimals(props.dataset.diffAmount) < 0)
 
 // const actualAmount = computed(() => {
 //   return getActualAmount(props.dataset, stockStore)
@@ -69,16 +74,12 @@ const canUpate = computed(() => {
   return true
 })
 
-function isValidDate(date) {
-  return date instanceof Date && date.getTime()
-}
-
 function updateInvoiceDates() {
   if (props.dataset.type === 3) return
 
-  let invoiceDate = new Date(props.dataset.invoiceDate)
+  let invoiceDate = props.dataset.invoiceDate ? new Date(props.dataset.invoiceDate) : null
 
-  if (isValidDate(invoiceDate)) {
+  if (isValid(invoiceDate)) {
     if (invoiceDate < store.currentDate) {
       store.setLastInvoiceDate(props.dataset.id, format(invoiceDate, 'yyyy-MM-dd'))
       const monthsPerInterval = intervals[props.dataset.interval].months
@@ -100,17 +101,19 @@ function calculateDebitAmount() {
   if (props.dataset.type === 3) return
 
   switch (props.dataset.type) {
-    case 1:
-      let invoiceDate = new Date(props.dataset.invoiceDate)
-      if (isValidDate(invoiceDate)) {
+    case 1: {
+      let invoiceDate = props.dataset.invoiceDate ? new Date(props.dataset.invoiceDate) : null
+      if (isValid(invoiceDate)) {
         const monthsBetween = getMonthDifference(store.currentDate, invoiceDate)
         const pastIntervalMonths = intervals[props.dataset.interval].months - monthsBetween
         store.setDebitAmount(props.dataset.id, pastIntervalMonths * props.dataset.monthlyAmount)
       }
       break
-    case 2:
+    }
+    case 2: {
       store.setDebitAmount(props.dataset.id, props.dataset.actualAmount)
       break
+    }
   }
 }
 
@@ -127,6 +130,8 @@ function getMonthDifference(startDate, endDate) {
 }
 
 function applyUpdate() {
+  if (!props.dataset.updateAmount && props.dataset.updateAmount !== 0) return
+
   if (props.dataset.type !== 3 && props.dataset.updateType === 'add') {
     store.addActualAmount(props.dataset.id, props.dataset.updateAmount)
   } else {
@@ -247,7 +252,7 @@ defineExpose({
           <a @click="changeUpdateType" :class="{ active: dataset.updateType === 'equals' }">=</a>
         </div>
         <CurrencyInput
-          v-model="dataset.updateAmount"
+          v-model="updateAmountInput"
           :options="{
             currency: 'EUR',
             locale: 'de-DE',

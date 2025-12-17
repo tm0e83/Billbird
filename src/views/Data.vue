@@ -294,7 +294,7 @@ function fillUpdateFields() {
           <InfoCircleFilledIcon></InfoCircleFilledIcon>
         </div>
         <div class="content">
-          Der Gastzugang dient nur zu Demonstrationszwecken. Einige Funktionalitäten sind nur
+          Der Gastzugang dient nur Demonstrationszwecken. Einige Funktionalitäten sind nur
           eingeschränkt oder gar nicht nutzbar.
         </div>
       </div>

@@ -5,6 +5,7 @@ import DatagroupItem from '@/components/DatagroupItem.vue'
 import { toCurrency } from './shared/functions.ts'
 import { CheckIcon } from 'vue-tabler-icons'
 import draggable from 'vuedraggable'
+import { trimDecimals } from '@/utils/number'
 
 const store = useStore()
 const datagroupRefs = ref([])
@@ -25,8 +26,8 @@ const hasUpdateAmounts = computed(() => {
   return store.allDatasets.filter((dataset) => !!dataset.updateAmount).length > 0
 })
 
-const isPositiveDiff = computed(() => parseFloat(store.totalDiffAmount.toFixed(2)) > 0)
-const isNegativeDiff = computed(() => parseFloat(store.totalDiffAmount.toFixed(2)) < 0)
+const isPositiveDiff = computed(() => trimDecimals(store.totalDiffAmount) > 0)
+const isNegativeDiff = computed(() => trimDecimals(store.totalDiffAmount) < 0)
 
 defineExpose({
   applyUpdate,

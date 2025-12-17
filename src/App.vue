@@ -1,20 +1,18 @@
-<script setup>
-import { ref, watch, onMounted } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { RouterView } from 'vue-router'
 import { useStore } from '@/stores/store'
+import { useAuth } from '@/composables/use-auth'
 import githubLogo from '@/assets/images/github-logo.svg'
 import { getAuth, signOut } from 'firebase/auth'
 import { router, publicPages } from './router'
 import { LoginIcon, LogoutIcon, SettingsIcon } from 'vue-tabler-icons'
+import { notify } from '@kyvg/vue3-notification'
+import MainMenu from '@/components/MainMenu.vue'
 
 const store = useStore()
 const auth = getAuth()
-const isLoggedIn = ref(false)
-
-watch(
-  () => store.uid,
-  () => (isLoggedIn.value = !!store.uid)
-)
+const { isLoggedIn } = useAuth();
 
 function login() {
   router.push('/login')
@@ -31,8 +29,6 @@ function logout() {
         router.push('/login')
       })
       .catch(() => {
-        console.log('failed to logout')
-
         notify({
           title: 'Es ist ein Fehler aufgetreten',
           type: 'error'
@@ -42,12 +38,13 @@ function logout() {
 }
 
 onMounted(() => {
-  const authRequired = !publicPages.includes(router.currentRoute.value.name)
+  const authRequired = !publicPages.includes(router.currentRoute.value.name as string)
 
   if (authRequired && !store.uid) {
     return '/login'
   }
 })
+
 // onBeforeMount(() => {
 //   store.isTouchDevice = 'ontouchstart' in window;
 // });
@@ -61,11 +58,7 @@ onMounted(() => {
         <span class="version font-mono">alpha</span>
       </a>
       <div class="nav-container">
-        <nav class="nav-main">
-          <RouterLink v-if="!isLoggedIn" to="/overview">Übersicht</RouterLink>
-          <RouterLink v-if="isLoggedIn" to="/data">Daten</RouterLink>
-          <RouterLink to="/faq">FAQ</RouterLink>
-        </nav>
+        <main-menu></main-menu>
         <nav class="nav-user">
           <a v-if="!isLoggedIn" @click="login" class="menu-item login">
             <LoginIcon />
@@ -84,7 +77,11 @@ onMounted(() => {
   </header>
 
   <main>
-    <RouterView />
+    <RouterView v-slot="{ Component }">
+      <Transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </Transition>
+    </RouterView>
   </main>
 
   <notifications position="bottom right" classes="bb-notification" width="360px" />
@@ -94,12 +91,21 @@ onMounted(() => {
 @import '@/assets/styles/variables';
 @import '@/assets/styles/mixins';
 
+/* Fade Transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+
 header {
   padding: 0.75rem;
   background-color: #fff;
-  // --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  // --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
-  // box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 
   .inner {
     width: 100%;
@@ -139,33 +145,6 @@ header {
   margin-top: 0.75rem;
 }
 
-.nav-main {
-  display: flex;
-  flex-grow: 1;
-  column-gap: 3rem;
-
-  a {
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
-      opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-    color: $gray-400;
-
-    &.router-link-active {
-      color: #000;
-      cursor: default;
-    }
-
-    &:hover {
-      color: #000;
-    }
-  }
-
-  @media (min-width: 640px) {
-    margin-left: 5rem;
-  }
-}
-
 .nav-user {
   display: flex;
   column-gap: 2rem;
@@ -195,7 +174,7 @@ header {
   }
 }
 
-// style of the notification itself
+// style of the notification
 .bb-notification {
   // styling
   margin: 0 5px 5px;

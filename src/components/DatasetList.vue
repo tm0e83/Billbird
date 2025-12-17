@@ -81,11 +81,11 @@ const hasUpdateAmounts = computed(() => {
 })
 
 function applyUpdate() {
-  datasetRefs.value.map((datasetRef) => datasetRef.applyUpdate())
+  datasetRefs.value.filter(ref => ref !== null).forEach((datasetRef) => datasetRef.applyUpdate())
 }
 
 function fillUpdateFields() {
-  datasetRefs.value.map((datasetRef) => datasetRef.fillUpdateField())
+  datasetRefs.value.filter(ref => ref !== null).forEach((datasetRef) => datasetRef.fillUpdateField())
 }
 
 function onDragStart() {

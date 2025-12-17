@@ -3,10 +3,10 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import { DotsVerticalIcon } from 'vue-tabler-icons'
 import { useElementEdges } from '@/composables/element-edges.js'
 
-const props = defineProps({
+defineProps({
   menuItems: {
     type: Array,
-    default: []
+    default: () => []
   }
 })
 

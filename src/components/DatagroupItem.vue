@@ -3,11 +3,10 @@ import { computed, reactive, ref } from 'vue'
 import { useStore } from '@/stores/store'
 import { toCurrency } from './shared/functions.ts'
 import DatasetList from '@/components/DatasetList.vue'
+import { trimDecimals } from '@/utils/number'
 import {
   CheckIcon,
-  EditIcon,
   GripVerticalIcon,
-  TrashIcon,
   DotsVerticalIcon
 } from 'vue-tabler-icons'
 import DropdownMenu from '@/components/DropdownMenu.vue'
@@ -95,8 +94,8 @@ const hasUpdateAmounts = computed(() => {
   return props.datagroup.datasets.filter((dataset) => !!dataset.updateAmount).length > 0
 })
 
-const isPositiveDiff = computed(() => totalDiffAmount.value > 0)
-const isNegativeDiff = computed(() => totalDiffAmount.value < 0)
+const isPositiveDiff = computed(() => trimDecimals(totalDiffAmount.value) > 0)
+const isNegativeDiff = computed(() => trimDecimals(totalDiffAmount.value) < 0)
 
 function activate() {
   store.activateDatagroup(props.datagroup.id)

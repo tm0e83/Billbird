@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { reactive, toRaw, watch } from 'vue'
 import { useStore } from '@/stores/store'
 
@@ -9,7 +9,7 @@ const emit = defineEmits(['close'])
 let data = Object.assign({}, toRaw(props.datagroup))
 let state = reactive({
   datagroup: data,
-  errors: []
+  errors: [] as string[]
 })
 
 watch(
@@ -21,11 +21,9 @@ watch(
   }
 )
 
-function validate() {
+function validate(): boolean {
   state.errors = []
-
   if (!state.datagroup.title) state.errors.push('title')
-
   return state.errors.length === 0
 }
 
