@@ -127,7 +127,9 @@ defineExpose({
 .list-footer {
   background-color: $gray-100;
   padding: 1.5rem calc(0.5rem + 20px + 1rem) 1.5rem calc(20px + 0.75rem);
+  border-top: 1px solid $gray-300;
   gap: 0 1rem;
+  font-weight: 500;
 }
 
 .prop {

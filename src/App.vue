@@ -58,7 +58,7 @@ onMounted(() => {
         <span class="version font-mono">alpha</span>
       </a>
       <div class="nav-container">
-        <main-menu></main-menu>
+        <!--<main-menu></main-menu>-->
         <nav class="nav-user">
           <a v-if="!isLoggedIn" @click="login" class="menu-item login">
             <LoginIcon />
@@ -110,6 +110,9 @@ header {
   .inner {
     width: 100%;
     margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
 
     @media (min-width: 640px) {
       display: flex;
@@ -139,7 +142,7 @@ header {
 
 .nav-container {
   display: flex;
-  flex-grow: 1;
+  // flex-grow: 1;
   align-self: flex-end;
   align-items: center;
   margin-top: 0.75rem;

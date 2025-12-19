@@ -10,11 +10,11 @@ import { useStore } from '@/stores/store'
 import { format, isValid } from 'date-fns'
 import {
   CheckIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  EditIcon,
+  // ChevronDownIcon,
+  // ChevronUpIcon,
+  // EditIcon,
+  // TrashIcon,
   GripVerticalIcon,
-  TrashIcon,
   DotsVerticalIcon
 } from 'vue-tabler-icons'
 import CurrencyInput from '@/components/CurrencyInput.vue'

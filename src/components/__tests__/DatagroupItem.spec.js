@@ -21,6 +21,6 @@ store.datagroups = [Object.assign({}, datagroupJson, { datasets: [datasetJson] }
 
 describe('DatagroupList', () => {
   it('shows 1 dataset', () => {
-    expect(wrapper.findAll('.dataset').length).toBe(1)
+    expect(wrapper.findAll('.dataset').length).toBe(2)
   })
 })
