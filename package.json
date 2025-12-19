@@ -14,6 +14,7 @@
     "format": "prettier --write src/",
     "prepare": "husky",
     "cy:open": "start-server-and-test dev http://localhost:5173 cypress:open",
+    "cy:run": "start-server-and-test dev http://localhost:5173 cypress:run",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
