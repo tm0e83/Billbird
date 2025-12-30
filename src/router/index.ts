@@ -28,6 +28,12 @@ const routes: RouteRecordRaw[] = [
     path: '/faq',
     name: 'faq',
     component: () => import('../views/Faq.vue')
+  },
+
+  // catch-all route to redirect to overview
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/overview'
   }
 ]
 
