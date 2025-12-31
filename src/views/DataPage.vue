@@ -1,14 +1,11 @@
 <script setup>
 import { onMounted, reactive, ref, toRaw } from 'vue'
 import { useStore } from '@/stores/store'
-// import { useStockStore } from '@/stores/stock-store'
-// import { useStockApi } from '@/composables/stockapi'
 import DatagroupList from '@/components/DatagroupList.vue'
 import EditDataset from '@/components/EditDataset.vue'
 import EditDatagroup from '@/components/EditDatagroup.vue'
 import DeleteDatagroup from '@/components/DeleteDatagroup.vue'
 import DropdownMenu from '@/components/DropdownMenu.vue'
-// import { stockSymbolToKey } from '@/components/shared/functions.ts'
 import { format } from 'date-fns'
 import {
   BucketDropletIcon,
@@ -25,8 +22,6 @@ import { notify } from '@kyvg/vue3-notification'
 const db = getDatabase()
 const dbRef = fireRef(db)
 const store = useStore()
-// const stockStore = useStockStore()
-// const stockApi = useStockApi()
 const datagroupListRef = ref(null)
 
 const state = reactive({
@@ -36,11 +31,6 @@ const state = reactive({
   editDatagroupModalVisible: false,
   deleteDatagroupModalVisible: false
 })
-
-// store.$subscribe((mutation, state) => {
-//   store.hasUnsavedData = true;
-//   window.addEventListener('beforeunload', beforeUnload);
-// });
 
 const beforeUnload = (e) => {
   e.preventDefault()
@@ -161,38 +151,6 @@ onMounted(() => {
       .then(async (snapshot) => {
         if (snapshot.exists()) {
           store.datagroups = snapshot.val().datagroups
-          // const alphavantage = snapshot.val().alphavantage
-          // stockStore.apiKey = alphavantage.apiKey
-          // const currentDateString = format(new Date(), 'yyyy-MM-dd')
-
-          // const allSymbols = store.allDatasets
-          //   .filter((dataset) => dataset.symbol)
-          //   .map((dataset) => stockSymbolToKey(dataset.symbol))
-
-          // const unfoundSymbols = allSymbols.filter((symbol) => {
-          //   return (
-          //     !alphavantage.data ||
-          //     !alphavantage.data.stocks ||
-          //     !alphavantage.data.stocks[symbol] ||
-          //     !alphavantage.data.stocks[symbol]['time_series'][currentDateString]
-          //   )
-          // })
-
-          // const allExchangeKeys = store.allDatasets
-          //   .filter((dataset) => dataset.currency && dataset.currency !== 'EUR')
-          //   .map((dataset) => `${dataset.currency}_EUR`)
-
-          // const unfoundExchangeKeys = allExchangeKeys.filter((exchangeKey) => {
-          //   return (
-          //     !alphavantage.data ||
-          //     !alphavantage.data.exchange_rates ||
-          //     !alphavantage.data.exchange_rates[exchangeKey] ||
-          //     !alphavantage.data.exchange_rates[exchangeKey][currentDateString]
-          //   )
-          // })
-
-          // stockApi.loadExchangeData(unfoundExchangeKeys)
-          // stockApi.loadStockData(unfoundSymbols)
         } else {
           return Promise.reject('Lesen aus der Datenbank fehlgeschlagen')
         }
@@ -301,12 +259,6 @@ function fillUpdateFields() {
     </div>
 
     <nav>
-      <!--
-      <div>
-        <input type="text" placeholder="Suche">
-      </div>
-      -->
-
       <div class="mobile-nav">
         <DropdownMenu :menuItems="menuItems">
           <DotsVerticalIcon class="w-5 h-5 mx-auto" />

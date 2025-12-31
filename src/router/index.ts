@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, type Router, type RouteRecordRaw, type RouteLocationNormalized } from 'vue-router'
-import Overview from '../views/Overview.vue'
+import OverviewPage from '../views/OverviewPage.vue'
 import { useStore } from '@/stores/store'
 
 export const publicPages: string[] = ['/login', '/overview', '/faq']
@@ -12,22 +12,22 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/overview',
     name: 'overview',
-    component: Overview
+    component: OverviewPage
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/LoginPage.vue')
   },
   {
     path: '/data',
     name: 'data',
-    component: () => import('../views/Data.vue')
+    component: () => import('../views/DataPage.vue')
   },
   {
     path: '/faq',
     name: 'faq',
-    component: () => import('../views/Faq.vue')
+    component: () => import('../views/FaqPage.vue')
   },
 
   // catch-all route to redirect to overview

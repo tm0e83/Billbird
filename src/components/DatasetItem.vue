@@ -1,35 +1,24 @@
 <script setup>
 import { computed, onBeforeUpdate, onMounted, ref } from 'vue'
 import intervals from './shared/intervals.json'
-import {
-  // getActualAmount,
-  toCurrency
-} from './shared/functions.ts'
+import { toCurrency } from './shared/functions.ts'
 import { useStore } from '@/stores/store'
-// import { useStockStore } from '@/stores/stock-store'
 import { format, isValid } from 'date-fns'
-import {
-  CheckIcon,
-  // ChevronDownIcon,
-  // ChevronUpIcon,
-  // EditIcon,
-  // TrashIcon,
-  GripVerticalIcon,
-  DotsVerticalIcon
-} from 'vue-tabler-icons'
+import { CheckIcon, GripVerticalIcon, DotsVerticalIcon } from 'vue-tabler-icons'
 import CurrencyInput from '@/components/CurrencyInput.vue'
 import DropdownMenu from '@/components/DropdownMenu.vue'
 import { trimDecimals } from '@/utils/number'
 
 const props = defineProps(['dataset'])
 const store = useStore()
-// const stockStore = useStockStore()
 const emit = defineEmits(['edit', 'delete'])
 const collapsed = ref(true)
+
 const updateAmountInput = computed({
   get: () => props.dataset.updateAmount,
   set: (value) => store.setUpdateAmount(props.dataset.id, value)
 })
+
 const menuItems = ref([
   {
     label: 'Ausfüllen',
@@ -44,23 +33,13 @@ const menuItems = ref([
     onClick: () => emit('delete', props.dataset)
   }
 ])
+
 const intervalName = computed(() =>
   props.dataset.type === 1 ? intervals[props.dataset.interval].name : ''
 )
+
 const isPositiveDiff = computed(() => trimDecimals(props.dataset.diffAmount) > 0)
 const isNegativeDiff = computed(() => trimDecimals(props.dataset.diffAmount) < 0)
-
-// const actualAmount = computed(() => {
-//   return getActualAmount(props.dataset, stockStore)
-// })
-
-// const debitAmount = computed(() => {
-//   if (props.dataset.type === 3) {
-//     return actualAmount.value
-//   }
-
-//   return toCurrency(props.dataset.debitAmount)
-// })
 
 const canUpate = computed(() => {
   if (props.dataset.updateType === 'equals' && typeof props.dataset.updateAmount !== 'number') {
@@ -180,13 +159,6 @@ defineExpose({
         </button>
         <div>
           <div>{{ dataset.title }}</div>
-          <!--
-            <div v-if="dataset.wkn || dataset.isin || dataset.symbol" class="stock-info">
-              <span v-if="dataset.wkn">WKN: {{ dataset.wkn }}</span>
-              <span v-if="dataset.isin">ISIN: {{ dataset.isin }}</span>
-              <span v-if="dataset.symbol">Symbol: {{ dataset.symbol }}</span>
-            </div>
-          -->
         </div>
       </div>
       <div class="current-value">{{ toCurrency(dataset.actualAmount) }}</div>

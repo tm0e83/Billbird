@@ -34,7 +34,7 @@
       Als ich 2022 unerwartet meinen Job verlor und mir klar wurde, dass mir für eine neue
       Arbeitsstelle Erfahrungen in Angular, React oder Vue fehlen, griff ich das Projekt wieder auf.
       &#8222;BillBird&#8220; sollte es heißen und für die Umsetzung entschied ich mich für Vue 3 mit
-      Tailwind CSS.
+      Tailwind CSS. Letzteres habe ich mittlerweile jedoch wieder entfernt.
     </p>
 
     <h2>Was ist inzwischen passiert?</h2>

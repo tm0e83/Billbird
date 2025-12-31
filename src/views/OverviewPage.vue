@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import eslintLogo from '@/assets/images/eslint-logo.svg'
 import typescriptLogo from '@/assets/images/typescript-logo.svg'
 import vuejsLogo from '@/assets/images/vuejs-logo.svg'
@@ -27,7 +27,7 @@ import barChart from '@/assets/images/bar-chart.svg'
         monatlich die nötigen Beträge für Jahres- oder Quartalsrechnungen zurückzulegen.
       </p>
 
-      <p>Das Projekt befindet sich noch im Aufbau.</p>
+      <p>Das Projekt befindet sich noch im Aufbau. Aktuell stelle ich das Projekt schrittweise auf TypeScript um.</p>
     </div>
 
     <div class="features">

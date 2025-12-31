@@ -11,5 +11,18 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
-  }
+  },
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+    'cypress/globals': true
+  },
+  plugins: ['cypress'],
+  overrides: [
+    {
+      files: ['cypress/e2e/**/*.{cy,spec}.{js,ts}'],
+      extends: ['plugin:cypress/recommended']
+    }
+  ]
 }

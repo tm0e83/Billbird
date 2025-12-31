@@ -44,10 +44,6 @@ onMounted(() => {
     return '/login'
   }
 })
-
-// onBeforeMount(() => {
-//   store.isTouchDevice = 'ontouchstart' in window;
-// });
 </script>
 
 <template>
