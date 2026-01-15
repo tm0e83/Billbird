@@ -1,20 +1,28 @@
 <script setup lang="ts">
 import { reactive, toRaw, watch } from 'vue'
 import { useStore } from '@/stores/store'
+import type { Datagroup } from '@/types/index.d'
+
+interface State {
+  datagroup: Datagroup
+  errors: string[]
+}
 
 const store = useStore()
-const props = defineProps(['datagroup'])
-const emit = defineEmits(['close'])
+const props = defineProps<{ datagroup: Datagroup }>()
+const emit = defineEmits<{
+  close: []
+}>()
 
 let data = Object.assign({}, toRaw(props.datagroup))
-let state = reactive({
+let state = reactive<State>({
   datagroup: data,
-  errors: [] as string[]
+  errors: []
 })
 
 watch(
   () => props.datagroup,
-  (newData, oldData) => {
+  (newData: Datagroup, oldData: Datagroup) => {
     data = Object.assign({}, toRaw(newData))
     state.datagroup = data
     state.errors = []
@@ -27,7 +35,7 @@ function validate(): boolean {
   return state.errors.length === 0
 }
 
-function save() {
+function save(): void {
   const isValid = validate()
 
   if (!isValid) return

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, reactive, ref, toRaw } from 'vue'
 import { useStore } from '@/stores/store'
 import DatagroupList from '@/components/DatagroupList.vue'
@@ -18,13 +18,22 @@ import {
 } from 'vue-tabler-icons'
 import { getDatabase, ref as fireRef, get, child, set, update } from 'firebase/database'
 import { notify } from '@kyvg/vue3-notification'
+import type { Dataset, Datagroup } from '@/types/index.d'
+
+interface State {
+  dataset: Dataset | null
+  datagroup: Datagroup | null
+  editDatasetModalVisible: boolean
+  editDatagroupModalVisible: boolean
+  deleteDatagroupModalVisible: boolean
+}
 
 const db = getDatabase()
 const dbRef = fireRef(db)
 const store = useStore()
-const datagroupListRef = ref(null)
+const datagroupListRef = ref<InstanceType<typeof DatagroupList> | null>(null)
 
-const state = reactive({
+const state = reactive<State>({
   dataset: null,
   datagroup: null,
   editDatasetModalVisible: false,
@@ -32,32 +41,32 @@ const state = reactive({
   deleteDatagroupModalVisible: false
 })
 
-const beforeUnload = (e) => {
+const beforeUnload = (e: BeforeUnloadEvent): void => {
   e.preventDefault()
-  return (e.returnValue = '')
+  e.returnValue = ''
 }
 
-function editDatagroup(datagroup) {
+function editDatagroup(datagroup: Datagroup): void {
   state.datagroup = datagroup
   state.editDatagroupModalVisible = true
 }
 
-function deleteDatagroup(datagroup) {
+function deleteDatagroup(datagroup: Datagroup): void {
   state.datagroup = datagroup
   state.deleteDatagroupModalVisible = true
 }
 
-function createNewDatagroup() {
+function createNewDatagroup(): void {
   state.datagroup = getNewDatagroup()
   state.editDatagroupModalVisible = true
 }
 
-function createNewDataset() {
+function createNewDataset(): void {
   state.dataset = getNewDataset()
   state.editDatasetModalVisible = true
 }
 
-function saveInDatabase() {
+function saveInDatabase(): void {
   set(fireRef(db, 'datagroups'), toRaw(store.datagroups))
     .then(() => {
       window.removeEventListener('beforeunload', beforeUnload)
@@ -67,7 +76,7 @@ function saveInDatabase() {
         type: 'success'
       })
     })
-    .catch((error) => {
+    .catch((error: Error) => {
       console.log('Save error', error)
 
       notify({
@@ -77,7 +86,7 @@ function saveInDatabase() {
     })
 }
 
-function getNewDatagroup() {
+function getNewDatagroup(): Datagroup {
   return {
     active: true,
     datasets: [],
@@ -91,17 +100,17 @@ function getNewDataset() {
     actualAmount: 0,
     debitAmount: 0,
     diffAmount: 0,
-    groupId: null,
+    groupId: 0,
     id: null,
     interval: '',
-    invoiceAmount: null,
+    invoiceAmount: 0,
     invoiceDate: null,
     lastInvoiceDate: null,
     lastUpdateDate: null,
     monthlyAmount: 0,
     title: '',
-    type: '',
-    updateAmount: '',
+    type: 1,
+    updateAmount: 0,
     updateType: 'add'
   }
 }
@@ -114,11 +123,17 @@ function loadData() {
     const reader = new FileReader()
 
     reader.onload = (event) => {
-      const resultJSON = JSON.parse(event.target.result)
-      store.datagroups = resultJSON.datagroups
+      const target = event.target as FileReader
+      if (target && typeof target.result === 'string') {
+        const resultJSON = JSON.parse(target.result)
+        store.datagroups = resultJSON.datagroups
+      }
     }
 
-    reader.readAsText(e.target.files[0])
+    const target = e.target as HTMLInputElement
+    if (target.files) {
+      reader.readAsText(target.files[0])
+    }
   })
 
   fileInput.click()

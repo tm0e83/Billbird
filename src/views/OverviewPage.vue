@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import eslintLogo from '@/assets/images/eslint-logo.svg'
 import typescriptLogo from '@/assets/images/typescript-logo.svg'
 import vuejsLogo from '@/assets/images/vuejs-logo.svg'
@@ -10,28 +11,44 @@ import prettierLogo from '@/assets/images/prettier-logo.svg'
 import invoiceBill from '@/assets/images/invoice-bill.svg'
 import piggyBank from '@/assets/images/piggy-bank.svg'
 import barChart from '@/assets/images/bar-chart.svg'
+import { useIntersectionGroupedFadeUp } from '@/composables/useIntersectionGroupedFadeUp'
+
+const intro = ref<HTMLElement | null>(null)
+const features = ref<HTMLElement | null>(null)
+const tech = ref<HTMLElement | null>(null)
+
+const sections = computed(() =>
+  [intro.value, features.value, tech.value].filter(Boolean) as HTMLElement[]
+)
+
+useIntersectionGroupedFadeUp(sections, {
+  stagger: 300,
+  initialDelay: 100
+});
 </script>
 
 <template>
   <div>
     <div class="intro text-xl">
-      <div class="headline">Was ist das hier?</div>
-      <p>
-        BillBird ist ein privates Vue3-Testprojekt zum Verwalten meiner eigenen Finanzen. Es ist
-        Programmierspielwiese und nützliches Tool gleichermaßen und ausschließlich für den
-        Eigengebrauch und als Showcase für Bewerbungen gedacht.
-      </p>
+      <div class="inner fade-up" ref="intro">
+        <div class="headline">Was ist das hier?</div>
+        <p>
+          BillBird ist ein privates Vue3-Testprojekt zum Verwalten meiner eigenen Finanzen. Es ist
+          Programmierspielwiese und nützliches Tool gleichermaßen und ausschließlich für den
+          Eigengebrauch und als Showcase für Bewerbungen gedacht.
+        </p>
 
-      <p>
-        Das Tool soll mir einen besseren Überblick über meine Ersparnisse geben und dabei helfen,
-        monatlich die nötigen Beträge für Jahres- oder Quartalsrechnungen zurückzulegen.
-      </p>
+        <p>
+          Das Tool soll mir einen besseren Überblick über meine Ersparnisse geben und dabei helfen,
+          monatlich die nötigen Beträge für Jahres- oder Quartalsrechnungen zurückzulegen.
+        </p>
 
-      <p>Das Projekt befindet sich noch im Aufbau. Aktuell stelle ich das Projekt schrittweise auf TypeScript um.</p>
+        <p>Das Projekt befindet sich noch im Aufbau. Aktuell stelle ich das Projekt schrittweise auf TypeScript um.</p>
+      </div>
     </div>
 
     <div class="features">
-      <div class="inner">
+      <div class="inner fade-up" ref="features">
         <div class="headline">Features</div>
         <div class="content">
           <div class="item item-1">
@@ -68,7 +85,7 @@ import barChart from '@/assets/images/bar-chart.svg'
     </div>
 
     <div class="tech-stack">
-      <div class="inner">
+      <div class="inner fade-up" ref="tech">
         <div class="headline">Technologie-Stack</div>
         <ul class="content">
           <li>
@@ -128,6 +145,28 @@ import barChart from '@/assets/images/bar-chart.svg'
 <style lang="scss" scoped>
 @import '@/assets/styles/variables';
 @import '@/assets/styles/mixins';
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(50px);
+
+  transition:
+    opacity 1.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
+  }
+}
 
 .intro {
   margin: auto;

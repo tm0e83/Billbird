@@ -1,13 +1,23 @@
-<script setup>
+<script setup lang="ts">
 import { useStore } from '@/stores/store'
+import type { Dataset } from '@/types/index.d'
 
 const store = useStore()
-const props = defineProps(['dataset'])
-const emit = defineEmits(['close'])
 
-function deleteDataset() {
-  store.deleteDataset(props.dataset)
-  emit('close')
+interface Props {
+  dataset: Dataset
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<{
+  close: []
+}>()
+
+function deleteDataset(): void {
+  if (props.dataset.id !== null) {
+    store.deleteDataset(props.dataset)
+    emit('close')
+  }
 }
 </script>
 

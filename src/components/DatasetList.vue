@@ -1,40 +1,55 @@
-<script setup>
+<script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import { useStore } from '@/stores/store'
-import { toCurrency } from './shared/functions.ts'
+import { toCurrency } from './shared/functions'
 import DatasetItem from '@/components/DatasetItem.vue'
 import EditDataset from '@/components/EditDataset.vue'
 import DeleteDataset from '@/components/DeleteDataset.vue'
 import { CheckIcon } from 'vue-tabler-icons'
 import draggable from 'vuedraggable'
+import type { Dataset } from '@/types/index.d'
 
-const props = defineProps(['datasets', 'collapsed'])
+interface State {
+  dataset: Dataset | null
+  editModalVisible: boolean
+  deleteModalVisible: boolean
+}
+
+interface Props {
+  datasets?: Dataset[]
+  collapsed?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  datasets: () => [],
+  collapsed: false
+})
 const store = useStore()
 
-const datasetRefs = ref([])
+const datasetRefs = ref<any[]>([])
 
-const state = reactive({
+const state = reactive<State>({
   dataset: null,
   editModalVisible: false,
   deleteModalVisible: false
 })
 
-function editDataset(dataset) {
+function editDataset(dataset: Dataset): void {
   state.dataset = null
   state.dataset = dataset
   state.editModalVisible = true
 }
 
-function deleteDataset(dataset) {
+function deleteDataset(dataset: Dataset): void {
   state.dataset = null
   state.dataset = dataset
   state.deleteModalVisible = true
 }
 
-const isPositiveDiff = computed(() => parseFloat(totalDiffAmount.value.toFixed(2)) > 0)
-const isNegativeDiff = computed(() => parseFloat(totalDiffAmount.value.toFixed(2)) < 0)
+const isPositiveDiff = computed<boolean>(() => parseFloat(totalDiffAmount.value.toFixed(2)) > 0)
+const isNegativeDiff = computed<boolean>(() => parseFloat(totalDiffAmount.value.toFixed(2)) < 0)
 
-const totalInvoiceAmount = computed(() => {
+const totalInvoiceAmount = computed<number>(() => {
   return props.datasets.reduce(
     (sum, dataset) => (dataset.invoiceAmount ? (sum += dataset.invoiceAmount) : sum),
     0

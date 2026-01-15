@@ -1,64 +1,42 @@
-<script setup>
+<script setup lang="ts">
 import { nextTick, reactive, ref, toRaw, watch } from 'vue'
 import { useStore } from '@/stores/store'
-// import { useStockStore } from '@/stores/stock-store'
-// import { useStockApi } from '@/composables/stockapi'
 import { format } from 'date-fns'
 import { de } from 'date-fns/locale'
 import CurrencyInput from '@/components/CurrencyInput.vue'
 import { SearchIcon } from 'vue-tabler-icons'
-// import { getStockDataBySymbol } from './shared/functions.ts'
-// import { notify } from '@kyvg/vue3-notification'
+import type { Dataset } from '@/types/index.d'
+
+interface State {
+  dataset: Dataset
+  errors: string[]
+}
 
 const store = useStore()
-// const stockStore = useStockStore()
-// const stockApi = useStockApi()
-const props = defineProps(['dataset'])
-const emit = defineEmits(['close'])
-const symbolSearchInput = ref(null)
-const symbolSearchResults = ref([])
-const searchButtonDisabled = ref(true)
+const props = defineProps<{ dataset: Dataset }>()
+const emit = defineEmits<{
+  close: []
+}>()
+const symbolSearchInput = ref<HTMLInputElement | null>(null)
+const symbolSearchResults = ref<Record<string, any>[]>([])
+const searchButtonDisabled = ref<boolean>(true)
 
 let data = Object.assign({}, toRaw(props.dataset))
-let state = reactive({
+let state = reactive<State>({
   dataset: data,
   errors: []
 })
 
-let searchSymbolVisible = ref(false)
+let searchSymbolVisible = ref<boolean>(false)
 
 watch(
   () => props.dataset,
-  (newData, oldData) => {
+  (newData: Dataset, oldData: Dataset) => {
     data = Object.assign({}, toRaw(newData))
     state.dataset = data
     state.errors = []
   }
 )
-
-// function showSearchSymbol() {
-//   searchSymbolVisible.value = true
-//   nextTick((_) => symbolSearchInput.value.focus())
-// }
-
-// function hideSearchSymbol() {
-//   searchSymbolVisible.value = false
-// }
-
-// function selectSymbol(symbolData) {
-//   state.dataset.symbol = symbolData['1. symbol']
-//   state.dataset.currency = symbolData['8. currency']
-//   hideSearchSymbol()
-// }
-
-// async function searchSymbol() {
-//   const response = await fetch(
-//     `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${symbolSearchInput.value.value}&apikey=${stockStore.apiKey}`
-//     // 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tesco&apikey=demo'
-//   )
-//   const resultData = await response.json()
-//   symbolSearchResults.value = resultData.bestMatches
-// }
 
 function validate() {
   state.errors = []
@@ -76,10 +54,6 @@ function validate() {
     case 2:
       if (isNaN(state.dataset.monthlyAmount)) state.errors.push('monthlyAmount')
       break
-    case 3:
-      if (!state.dataset.symbol) state.errors.push('symbol')
-      if (!state.dataset.shares) state.errors.push('shares')
-      break
     default:
       state.errors.push('type')
   }
@@ -91,15 +65,6 @@ async function save() {
   const isValid = validate()
 
   if (!isValid) return
-
-  // const stockData = getStockDataBySymbol(state.dataset.symbol, stockStore)
-  // const todaysStockData = stockData !== null ? stockApi.getLatestData(stockData.time_series) : null
-
-  // console.log('todaysStockData', todaysStockData)
-
-  // if (todaysStockData === null) {
-  //   stockApi.loadStockData([state.dataset.symbol])
-  // }
 
   if (state.dataset.id === null) {
     state.dataset.id = store.nextDatasetId
@@ -136,7 +101,6 @@ function onSymbolSearchInput(e) {
         <option value="" style="display: none">Auswählen</option>
         <option value="1">Rechnung</option>
         <option value="2">Sparplan</option>
-        <!--<option value="3">Wertpapier</option>-->
       </select>
     </div>
 
@@ -199,74 +163,6 @@ function onSymbolSearchInput(e) {
             :options="{ currency: 'EUR', locale: 'de-DE', autoDecimalDigits: true }"
             classes="w-full"
           />
-        </div>
-      </div>
-
-      <div v-else-if="state.dataset.type === 3">
-        <div class="mb-4">
-          <label for="ds-new-symbol">Symbol</label>
-          <input
-            v-if="!searchSymbolVisible"
-            type="text"
-            id="ds-new-symbol"
-            v-model="state.dataset.symbol"
-          />
-          <div v-if="!searchSymbolVisible" class="text-right">
-            <a @click="showSearchSymbol">Symbol finden</a>
-          </div>
-          <div class="flex" v-if="searchSymbolVisible">
-            <div class="input-button-group">
-              <input
-                type="text"
-                id="ds-new-symbol-search"
-                ref="symbolSearchInput"
-                @keyup.enter="searchSymbol"
-                @input="onSymbolSearchInput"
-              />
-              <button @click="searchSymbol" class="button" :disabled="searchButtonDisabled">
-                <SearchIcon class="w-5 h-5 mx-auto" />
-              </button>
-            </div>
-          </div>
-          <div
-            v-if="searchSymbolVisible && symbolSearchResults.length"
-            class="symbol-search-results"
-          >
-            <div v-for="(result, index) in symbolSearchResults" class="search-result" :key="index">
-              <div>
-                <div>Symbol: {{ result['1. symbol'] }}</div>
-                <div>Name: {{ result['2. name'] }}</div>
-                <div>Region: {{ result['4. region'] }}</div>
-                <div>Währung: {{ result['8. currency'] }}</div>
-              </div>
-              <div>
-                <button @click="(e) => selectSymbol(result)" class="button">Auswählen</button>
-              </div>
-            </div>
-          </div>
-          <div v-if="searchSymbolVisible" class="text-right">
-            <a @click="hideSearchSymbol">Suche schließen</a>
-          </div>
-        </div>
-        <div class="mb-4">
-          <label for="ds-new-currency">Währung</label>
-          <select id="ds-new-currency" v-model="state.dataset.currency">
-            <option value="" :selected="!state.dataset.currency">Auswählen</option>
-            <option value="EUR" :selected="state.dataset.currency === 'EUR'">EUR</option>
-            <option value="USD" :selected="state.dataset.currency === 'USD'">USD</option>
-          </select>
-        </div>
-        <div class="mb-4">
-          <label for="ds-new-isin">ISIN</label>
-          <input type="text" id="ds-new-isin" v-model="state.dataset.isin" />
-        </div>
-        <div class="mb-4">
-          <label for="ds-new-wkn">WKN</label>
-          <input type="text" id="ds-new-wkn" v-model="state.dataset.wkn" />
-        </div>
-        <div class="mb-4">
-          <label for="ds-new-shares">Anteile</label>
-          <input type="number" id="ds-new-shares" v-model="state.dataset.shares" />
         </div>
       </div>
     </div>

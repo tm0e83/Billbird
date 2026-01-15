@@ -1,25 +1,42 @@
-<script setup>
+<script setup lang="ts">
 import { computed, onBeforeUpdate, onMounted, ref } from 'vue'
 import intervals from './shared/intervals.json'
-import { toCurrency } from './shared/functions.ts'
+import { toCurrency } from './shared/functions'
 import { useStore } from '@/stores/store'
 import { format, isValid } from 'date-fns'
 import { CheckIcon, GripVerticalIcon, DotsVerticalIcon } from 'vue-tabler-icons'
 import CurrencyInput from '@/components/CurrencyInput.vue'
 import DropdownMenu from '@/components/DropdownMenu.vue'
 import { trimDecimals } from '@/utils/number'
+import type { Dataset } from '@/types/index.d'
 
-const props = defineProps(['dataset'])
+interface MenuItem {
+  label: string
+  onClick: () => void
+}
+
+interface Props {
+  dataset: Dataset
+}
+
+const props = defineProps<Props>()
 const store = useStore()
-const emit = defineEmits(['edit', 'delete'])
+const emit = defineEmits<{
+  edit: [dataset: Dataset]
+  delete: [dataset: Dataset]
+}>()
 const collapsed = ref(true)
 
 const updateAmountInput = computed({
-  get: () => props.dataset.updateAmount,
-  set: (value) => store.setUpdateAmount(props.dataset.id, value)
+  get: (): number | null => props.dataset.updateAmount,
+  set: (value: number | null): void => {
+    if (props.dataset.id !== null) {
+      store.setUpdateAmount(props.dataset.id, value)
+    }
+  }
 })
 
-const menuItems = ref([
+const menuItems = ref<MenuItem[]>([
   {
     label: 'Ausfüllen',
     onClick: () => fillUpdateField()
@@ -34,14 +51,14 @@ const menuItems = ref([
   }
 ])
 
-const intervalName = computed(() =>
+const intervalName = computed<string>(() =>
   props.dataset.type === 1 ? intervals[props.dataset.interval].name : ''
 )
 
-const isPositiveDiff = computed(() => trimDecimals(props.dataset.diffAmount) > 0)
-const isNegativeDiff = computed(() => trimDecimals(props.dataset.diffAmount) < 0)
+const isPositiveDiff = computed<boolean>(() => trimDecimals(props.dataset.diffAmount) > 0)
+const isNegativeDiff = computed<boolean>(() => trimDecimals(props.dataset.diffAmount) < 0)
 
-const canUpate = computed(() => {
+const canUpate = computed<boolean>(() => {
   if (props.dataset.updateType === 'equals' && typeof props.dataset.updateAmount !== 'number') {
     return false
   }
@@ -53,12 +70,10 @@ const canUpate = computed(() => {
   return true
 })
 
-function updateInvoiceDates() {
-  if (props.dataset.type === 3) return
-
+function updateInvoiceDates(): void {
   let invoiceDate = props.dataset.invoiceDate ? new Date(props.dataset.invoiceDate) : null
 
-  if (isValid(invoiceDate)) {
+  if (invoiceDate && isValid(invoiceDate) && props.dataset.id !== null) {
     if (invoiceDate < store.currentDate) {
       store.setLastInvoiceDate(props.dataset.id, format(invoiceDate, 'yyyy-MM-dd'))
       const monthsPerInterval = intervals[props.dataset.interval].months
@@ -69,7 +84,7 @@ function updateInvoiceDates() {
 }
 
 function calculateMonthlyAmount() {
-  if (props.dataset.type !== 1) return
+  if (props.dataset.type !== 1 || props.dataset.id === null) return
   store.setMonthlyAmount(
     props.dataset.id,
     props.dataset.invoiceAmount / intervals[props.dataset.interval].months
@@ -77,7 +92,7 @@ function calculateMonthlyAmount() {
 }
 
 function calculateDebitAmount() {
-  if (props.dataset.type === 3) return
+  if (props.dataset.id === null) return
 
   switch (props.dataset.type) {
     case 1: {
@@ -97,6 +112,7 @@ function calculateDebitAmount() {
 }
 
 function calculateDiffAmount() {
+  if (props.dataset.id === null) return
   store.setDiffAmount(props.dataset.id, props.dataset.actualAmount - props.dataset.debitAmount)
 }
 
@@ -109,6 +125,7 @@ function getMonthDifference(startDate, endDate) {
 }
 
 function applyUpdate() {
+  if (props.dataset.id === null) return
   if (!props.dataset.updateAmount && props.dataset.updateAmount !== 0) return
 
   if (props.dataset.type !== 3 && props.dataset.updateType === 'add') {
@@ -121,10 +138,12 @@ function applyUpdate() {
 }
 
 function changeUpdateType() {
+  if (props.dataset.id === null) return
   store.setUpdateType(props.dataset.id, props.dataset.updateType === 'add' ? 'equals' : 'add')
 }
 
 function fillUpdateField() {
+  if (props.dataset.id === null) return
   if (props.dataset.type !== 3 && props.dataset.updateType === 'add') {
     store.setUpdateAmount(props.dataset.id, props.dataset.monthlyAmount)
   }

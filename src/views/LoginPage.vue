@@ -1,32 +1,33 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useStore } from '@/stores/store'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import router from '@/router/index'
+import type { UserCredential } from 'firebase/auth'
 
 const store = useStore()
-const email = ref('')
-const password = ref('')
-const hasError = ref(false)
+const email = ref<string>('')
+const password = ref<string>('')
+const hasError = ref<boolean>(false)
 
-function login(e) {
+function login(e: Event): void {
   e.preventDefault()
 
   const auth = getAuth()
 
   signInWithEmailAndPassword(auth, email.value, password.value)
-    .then((data) => {
+    .then((data: UserCredential) => {
       store.uid = data.user.uid
       router.push('/data')
     })
-    .catch((error) => {
+    .catch((error: Error) => {
       hasError.value = true
       router.push('/login')
       console.log('Login Error', error)
     })
 }
 
-function loginAsGuest() {
+function loginAsGuest(): void {
   store.uid = 'testuser'
   router.push('/data')
 }

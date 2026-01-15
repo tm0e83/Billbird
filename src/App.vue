@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useStore } from '@/stores/store'
-import { useAuth } from '@/composables/use-auth'
+import { useAuth } from '@/composables/useAuth'
 import githubLogo from '@/assets/images/github-logo.svg'
 import { getAuth, signOut } from 'firebase/auth'
 import { router, publicPages } from './router'

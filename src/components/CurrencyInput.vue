@@ -1,13 +1,25 @@
-<script setup>
-import { watch } from 'vue'
+<script setup lang="ts">
+import { watch, ref } from 'vue'
 import { useCurrencyInput } from 'vue-currency-input'
+import type { CurrencyInputOptions } from 'vue-currency-input'
 
-const props = defineProps(['modelValue', 'options', 'classes'])
-const { inputRef, setValue } = useCurrencyInput(props.options)
+interface Props {
+  modelValue?: number | null
+  options?: Partial<CurrencyInputOptions>
+  classes?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: 0,
+  options: () => ({}),
+  classes: ''
+})
+
+const { inputRef, setValue } = useCurrencyInput(props.options as CurrencyInputOptions)
 
 watch(
   () => props.modelValue,
-  (value) => setValue(value)
+  (value: number | null | undefined) => setValue(value ?? 0)
 )
 
 defineExpose({
@@ -20,6 +32,6 @@ defineExpose({
     ref="inputRef"
     type="text"
     placeholder="0,00 €"
-    :class="[classes, modelValue < 0 ? 'negative' : '']"
+    :class="[classes, props.modelValue && props.modelValue < 0 ? 'negative' : '']"
   />
 </template>

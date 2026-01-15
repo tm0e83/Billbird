@@ -1,33 +1,33 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useStore } from '@/stores/store'
 import DatagroupItem from '@/components/DatagroupItem.vue'
-import { toCurrency } from './shared/functions.ts'
+import { toCurrency } from './shared/functions'
 import { CheckIcon } from 'vue-tabler-icons'
 import draggable from 'vuedraggable'
 import { trimDecimals } from '@/utils/number'
 
 const store = useStore()
-const datagroupRefs = ref([])
+const datagroupRefs = ref<any[]>([])
 
-function applyUpdate() {
+function applyUpdate(): void {
   datagroupRefs.value.map((datagroupRef) => datagroupRef.applyUpdate())
 }
 
-function fillUpdateFields() {
+function fillUpdateFields(): void {
   datagroupRefs.value.map((datagroupRef) => datagroupRef.fillUpdateFields())
 }
 
-function onDragStart() {
+function onDragStart(): void {
   navigator.vibrate(100)
 }
 
-const hasUpdateAmounts = computed(() => {
+const hasUpdateAmounts = computed<boolean>(() => {
   return store.allDatasets.filter((dataset) => !!dataset.updateAmount).length > 0
 })
 
-const isPositiveDiff = computed(() => trimDecimals(store.totalDiffAmount) > 0)
-const isNegativeDiff = computed(() => trimDecimals(store.totalDiffAmount) < 0)
+const isPositiveDiff = computed<boolean>(() => trimDecimals(store.totalDiffAmount) > 0)
+const isNegativeDiff = computed<boolean>(() => trimDecimals(store.totalDiffAmount) < 0)
 
 defineExpose({
   applyUpdate,

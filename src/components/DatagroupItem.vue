@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import { useStore } from '@/stores/store'
-import { toCurrency } from './shared/functions.ts'
+import { toCurrency } from './shared/functions'
 import DatasetList from '@/components/DatasetList.vue'
 import { trimDecimals } from '@/utils/number'
 import {
@@ -10,20 +10,36 @@ import {
   DotsVerticalIcon
 } from 'vue-tabler-icons'
 import DropdownMenu from '@/components/DropdownMenu.vue'
+import type { Datagroup } from '@/types/index.d'
 
-const props = defineProps(['datagroup'])
+interface MenuItem {
+  label: string
+  onClick: () => void
+  condition?: boolean
+  disabled?: boolean
+  href?: string
+}
+
+interface State {
+  collapsed: boolean
+}
+
+const props = defineProps<{ datagroup: Datagroup }>()
 const store = useStore()
-const emit = defineEmits(['edit', 'delete'])
-const datasetListRef = ref(null)
+const emit = defineEmits<{
+  edit: [datagroup: Datagroup]
+  delete: [datagroup: Datagroup]
+}>()
+const datasetListRef = ref<InstanceType<typeof DatasetList> | null>(null)
 
-const state = reactive({
+const state = reactive<State>({
   collapsed: true
 })
 
-const isActive = computed(() => props.datagroup.active === true)
-const isInctive = computed(() => props.datagroup.active === false)
+const isActive = computed<boolean>(() => props.datagroup.active === true)
+const isInctive = computed<boolean>(() => props.datagroup.active === false)
 
-const menuItems = reactive([
+const menuItems = reactive<MenuItem[]>([
   {
     label: 'Ausfüllen',
     onClick: () => fillUpdateFields()
@@ -39,23 +55,23 @@ const menuItems = reactive([
   {
     label: 'Aktivieren',
     onClick: () => activate(),
-    condition: isInctive
+    condition: isInctive.value
   },
   {
     label: 'Deaktivieren',
     onClick: () => deactivate(),
-    condition: isActive
+    condition: isActive.value
   }
 ])
 
-const totalActualAmount = computed(() => {
+const totalActualAmount = computed<number>(() => {
   return props.datagroup.datasets.reduce(
     (sum, dataset) => (dataset.actualAmount ? (sum += dataset.actualAmount) : sum),
     0
   )
 })
 
-const totalInvoiceAmount = computed(() => {
+const totalInvoiceAmount = computed<number>(() => {
   return props.datagroup.datasets.reduce(
     (sum, dataset) => (dataset.invoiceAmount ? (sum += dataset.invoiceAmount) : sum),
     0
@@ -98,12 +114,16 @@ const isPositiveDiff = computed(() => trimDecimals(totalDiffAmount.value) > 0)
 const isNegativeDiff = computed(() => trimDecimals(totalDiffAmount.value) < 0)
 
 function activate() {
-  store.activateDatagroup(props.datagroup.id)
+  if (props.datagroup.id !== null) {
+    store.activateDatagroup(props.datagroup.id)
+  }
 }
 
 function deactivate() {
   state.collapsed = true
-  store.deactivateDatagroup(props.datagroup.id)
+  if (props.datagroup.id !== null) {
+    store.deactivateDatagroup(props.datagroup.id)
+  }
 }
 
 function toggle(e) {

@@ -1,11 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { useStore } from '@/stores/store'
+import type { Datagroup } from '@/types/index.d'
 
 const store = useStore()
-const props = defineProps(['datagroup'])
-const emit = defineEmits(['close'])
 
-function deleteDatagroup() {
+interface Props {
+  datagroup: Datagroup
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<{
+  close: []
+}>()
+
+function deleteDatagroup(): void {
   store.deleteDatagroup(props.datagroup.id)
   emit('close')
 }

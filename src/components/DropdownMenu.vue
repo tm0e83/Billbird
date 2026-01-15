@@ -1,27 +1,36 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import { DotsVerticalIcon } from 'vue-tabler-icons'
-import { useElementEdges } from '@/composables/element-edges.js'
+import { useElementEdges } from '@/composables/useElementEdges'
 
-defineProps({
-  menuItems: {
-    type: Array,
-    default: () => []
-  }
+interface MenuItem {
+  label: string
+  onClick: () => void
+  condition?: boolean | { value: boolean }
+  disabled?: boolean
+  href?: string
+}
+
+interface Props {
+  menuItems?: MenuItem[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  menuItems: () => []
 })
 
-const isExpanded = ref(false)
-const dropdownMenuRef = ref(null)
-const triggerRef = ref(null)
-const dropdownLayerRef = ref(null)
+const isExpanded = ref<boolean>(false)
+const dropdownMenuRef = ref<HTMLElement | null>(null)
+const triggerRef = ref<HTMLElement | null>(null)
+const dropdownLayerRef = ref<HTMLElement | null>(null)
 
-function toggle(e) {
+function toggle(e: Event): void {
   e.stopPropagation()
   positionLayer()
   isExpanded.value = !isExpanded.value
 }
 
-function positionLayer() {
+function positionLayer(): void {
   if (!dropdownLayerRef.value) return
 
   const layerRect = dropdownLayerRef.value.getBoundingClientRect()
@@ -32,8 +41,8 @@ function positionLayer() {
   const fitsLeft = triggerEdges.top.right.x - layerRect.width > 0
   const fitsRight = bodyRect.width - triggerEdges.top.right.x - layerRect.width > 0
 
-  let x,
-    y = triggerEdges.bottom.left.y
+  let x: number;
+  let y: number = triggerEdges.bottom.left.y
 
   if (fitsRight) {
     x = triggerEdges.top.left.x
@@ -85,7 +94,7 @@ onUnmounted(() => {
           <template v-for="(menuItem, index) in menuItems" :key="index">
             <li v-if="menuItem.condition !== false">
               <a
-                :href="menuItem.disabled ? null : menuItem.href"
+                :href="menuItem.disabled ? undefined : menuItem.href"
                 :class="{ disabled: menuItem.disabled === true }"
                 @click="!menuItem.disabled ? menuItem.onClick() : null"
                 >{{ menuItem.label }}</a

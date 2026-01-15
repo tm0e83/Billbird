@@ -1,30 +1,5 @@
 import { defineStore } from 'pinia'
-
-// Type Definitions
-export interface Dataset {
-  id: number
-  title: string
-  groupId: number
-  interval: string
-  type: number
-  invoiceAmount: number
-  invoiceDate: string | null
-  lastInvoiceDate: string | null
-  lastUpdateDate: string | null
-  monthlyAmount: number
-  actualAmount: number
-  debitAmount: number
-  diffAmount: number
-  updateAmount: number | null
-  updateType: string
-}
-
-export interface Datagroup {
-  id: number
-  title: string
-  active: boolean
-  datasets: Dataset[]
-}
+import type { Dataset, Datagroup } from '@/types/index.d'
 
 export interface StoreState {
   alphavantage: any
@@ -64,13 +39,13 @@ export const useStore = defineStore({
 
     nextDatagroupId(state): number {
       if (!state.datagroups.length) return 1
-      return Math.max(...state.datagroups.map((datagroup) => datagroup.id)) + 1
+      return Math.max(...state.datagroups.map((datagroup) => datagroup.id ?? 0)) + 1
     },
 
     nextDatasetId(state): number {
       const allDatasets = getAllDatasets(state.datagroups)
       if (!allDatasets.length) return 1
-      return Math.max(...allDatasets.map((dataset) => dataset.id)) + 1
+      return Math.max(...allDatasets.map((dataset) => dataset.id ?? 0)) + 1
     },
 
     totalInvoiceAmount(state): number {
