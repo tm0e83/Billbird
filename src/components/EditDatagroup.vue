@@ -75,15 +75,15 @@ function save(): void {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .errors {
   margin-bottom: 1rem;
   padding: 1.25rem;
-  color: $red-700;
-  border: 1px solid $red-700;
-  background-color: $red-100;
+  color: variables.$red-700;
+  border: 1px solid variables.$red-700;
+  background-color: variables.$red-100;
 }
 
 .buttons {

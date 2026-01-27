@@ -143,8 +143,8 @@ useIntersectionGroupedFadeUp(sections, {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .fade-up {
   opacity: 0;
@@ -205,7 +205,7 @@ useIntersectionGroupedFadeUp(sections, {
 }
 
 .features {
-  background-color: $slate-300;
+  background-color: variables.$slate-300;
 
   .content {
     @media (min-width: 640px) {
@@ -267,7 +267,7 @@ useIntersectionGroupedFadeUp(sections, {
 }
 
 .tech-stack {
-  background-color: $slate-800;
+  background-color: variables.$slate-800;
 
   .headline {
     color: #fff;

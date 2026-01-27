@@ -84,8 +84,8 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 /* Fade Transition */
 .fade-enter-active,
@@ -131,7 +131,7 @@ header {
   font-size: 0.75rem;
   line-height: 1rem;
   align-self: flex-end;
-  color: $red-600;
+  color: variables.$red-600;
   margin-left: 0.25rem;
   font-weight: 700;
 }
@@ -180,7 +180,7 @@ header {
   padding: 0.75rem;
   font-size: 1rem;
   color: #fff;
-  border-radius: $global-radius;
+  border-radius: variables.$global-radius;
 
   // default (blue)
   background: #44a4fc;

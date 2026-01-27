@@ -14,8 +14,8 @@ const { isLoggedIn } = useAuth();
 </template>
 
 <style lang="scss">
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .nav-main {
   flex-grow: 1;
@@ -27,7 +27,7 @@ const { isLoggedIn } = useAuth();
       opacity, box-shadow, transform, filter, backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
-    color: $gray-400;
+    color: variables.$gray-400;
 
     &.router-link-active {
       color: #000;

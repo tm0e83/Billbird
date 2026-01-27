@@ -268,27 +268,27 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .dataset {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  border-bottom: 1px solid $gray-200;
+  border-bottom: 1px solid variables.$gray-200;
   padding: 0 0.5rem;
 
   &.sortable-chosen {
-    border: 1px dashed $primary-color;
+    border: 1px dashed variables.$primary-color;
   }
 }
 
 .positive {
-  color: $green-600;
+  color: variables.$green-600;
 }
 
 .negative {
-  color: $red-600;
+  color: variables.$red-600;
 }
 
 .prop {
@@ -370,11 +370,11 @@ defineExpose({
     align-items: center;
     padding: 0 0.25rem;
     flex: 1;
-    color: $gray-300;
+    color: variables.$gray-300;
     line-height: 1;
 
     &.active {
-      color: $primary-color;
+      color: variables.$primary-color;
       font-weight: bold;
     }
   }
@@ -396,7 +396,7 @@ defineExpose({
   }
 }
 
-@media (min-width: $sm) {
+@media (min-width: variables.$sm) {
   .title {
     flex-basis: 100%;
   }
@@ -420,7 +420,7 @@ defineExpose({
   }
 }
 
-@media (min-width: $xxl) {
+@media (min-width: variables.$xxl) {
   .dataset {
     flex-direction: row;
     flex-wrap: nowrap;

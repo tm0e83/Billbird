@@ -14,7 +14,9 @@ const emit = defineEmits<{
 }>()
 
 function deleteDatagroup(): void {
-  store.deleteDatagroup(props.datagroup.id)
+  if (props.datagroup.id !== null) {
+    store.deleteDatagroup(props.datagroup.id)
+  }
   emit('close')
 }
 </script>
@@ -30,8 +32,8 @@ function deleteDatagroup(): void {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .modal-head {
   text-align: center;

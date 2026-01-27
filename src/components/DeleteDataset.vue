@@ -32,8 +32,8 @@ function deleteDataset(): void {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .modal-head {
   text-align: center;

@@ -61,8 +61,8 @@ function loginAsGuest(): void {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .box {
   max-width: 28rem;
@@ -84,8 +84,8 @@ function loginAsGuest(): void {
 .errors {
   margin-bottom: 1rem;
   padding: 1.25rem;
-  border: 1px solid $red-700;
-  background-color: $red-100;
+  border: 1px solid variables.$red-700;
+  background-color: variables.$red-100;
   border-radius: 0.25rem;
 }
 </style>

@@ -131,7 +131,7 @@ function loadData() {
     }
 
     const target = e.target as HTMLInputElement
-    if (target.files) {
+    if (target.files && target.files[0]) {
       reader.readAsText(target.files[0])
     }
   })
@@ -343,8 +343,8 @@ function fillUpdateFields() {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 body {
   overflow-y: scroll;
@@ -365,7 +365,7 @@ body {
   .message {
     display: flex;
     align-items: center;
-    border-radius: $global-radius;
+    border-radius: variables.$global-radius;
     border: 1px solid;
     padding: 1rem;
     gap: 0.5rem;
@@ -379,9 +379,9 @@ body {
     }
 
     &.info {
-      border-color: lighten($info-color, 40%);
-      background-color: lighten(rgba($info-color, 0.15), 40%);
-      color: $info-color;
+      border-color: lighten(variables.$info-color, 40%);
+      background-color: lighten(rgba(variables.$info-color, 0.15), 40%);
+      color: variables.$info-color;
     }
   }
 }
@@ -400,7 +400,7 @@ nav {
   justify-content: flex-end;
   padding-right: 0.5rem;
 
-  @media (min-width: $md) {
+  @media (min-width: variables.$md) {
     display: none;
   }
 }
@@ -413,7 +413,7 @@ nav {
     gap: 0.25rem;
   }
 
-  @media (min-width: $md) {
+  @media (min-width: variables.$md) {
     list-style: none;
     margin: 0;
     padding: 0;

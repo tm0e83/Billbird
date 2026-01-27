@@ -175,8 +175,8 @@ function onSymbolSearchInput(e) {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .mb-4 {
   margin-bottom: 1rem;
@@ -185,9 +185,9 @@ function onSymbolSearchInput(e) {
 .errors {
   margin-bottom: 1rem;
   padding: 1.25rem;
-  color: $red-700;
-  border: 1px solid $red-700;
-  background-color: $red-100;
+  color: variables.$red-700;
+  border: 1px solid variables.$red-700;
+  background-color: variables.$red-100;
   border-radius: 0.25rem;
 }
 
@@ -213,7 +213,7 @@ function onSymbolSearchInput(e) {
 .search-result {
   padding-bottom: 0.5rem;
   margin-bottom: 0.5rem;
-  border-bottom: 1px solid $gray-300;
+  border-bottom: 1px solid variables.$gray-300;
   text-align: left;
   display: flex;
   justify-content: space-between;

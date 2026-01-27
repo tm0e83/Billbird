@@ -39,7 +39,7 @@ const state = reactive<State>({
 const isActive = computed<boolean>(() => props.datagroup.active === true)
 const isInctive = computed<boolean>(() => props.datagroup.active === false)
 
-const menuItems = reactive<MenuItem[]>([
+const menuItems = computed<MenuItem[]>(() => [
   {
     label: 'Ausfüllen',
     onClick: () => fillUpdateFields()
@@ -216,23 +216,23 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .datagroup {
   background-color: #fff;
   margin-bottom: 1px;
 
   .positive {
-    color: $green-600;
+    color: variables.$green-600;
   }
 
   .negative {
-    color: $red-600;
+    color: variables.$red-600;
   }
 
   &.sortable-chosen .head {
-    border: 1px dashed $primary-color;
+    border: 1px dashed variables.$primary-color;
   }
 
   &:last-of-type {
@@ -240,7 +240,7 @@ defineExpose({
   }
 
   &.inactive {
-    color: $gray-300;
+    color: variables.$gray-300;
   }
 
   .head {
@@ -251,7 +251,7 @@ defineExpose({
     min-height: 3.25rem;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: inset 0 -1px 0 0 $gray-200;
+    box-shadow: inset 0 -1px 0 0 variables.$gray-200;
 
     .current-value {
       display: none;
@@ -357,7 +357,7 @@ defineExpose({
   }
 
   .list {
-    background-color: $gray-50;
+    background-color: variables.$gray-50;
   }
 
   .no-results-message {
@@ -376,7 +376,7 @@ defineExpose({
     }
   }
 
-  @media (min-width: $xxl) {
+  @media (min-width: variables.$xxl) {
     .head {
       justify-content: space-between;
     }

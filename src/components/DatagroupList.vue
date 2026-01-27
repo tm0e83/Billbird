@@ -109,25 +109,25 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .outer-list {
   box-shadow: 0 0 2px 0 rgb(99, 99, 99, 0.15);
 }
 
 .positive {
-  color: $green-600;
+  color: variables.$green-600;
 }
 
 .negative {
-  color: $red-600;
+  color: variables.$red-600;
 }
 
 .list-footer {
-  background-color: $gray-100;
+  background-color: variables.$gray-100;
   padding: 1.5rem calc(0.5rem + 20px + 1rem) 1.5rem calc(20px + 0.75rem);
-  border-top: 1px solid $gray-300;
+  border-top: 1px solid variables.$gray-300;
   gap: 0 1rem;
   font-weight: 500;
 }
@@ -198,7 +198,7 @@ defineExpose({
     align-self: flex-end;
   }
 
-  @media (min-width: 1536px) {
+  @media (min-width: variables.$xxl) {
     align-items: center;
     flex-direction: row;
 
@@ -221,7 +221,7 @@ defineExpose({
   margin-right: auto;
 }
 
-@media (min-width: $xxl) {
+@media (min-width: variables.$xxl) {
   .list-footer {
     display: flex;
     flex-wrap: wrap;

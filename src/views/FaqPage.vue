@@ -60,14 +60,14 @@
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-@import '@/assets/styles/mixins';
+@use '@/assets/styles/variables';
+@use '@/assets/styles/mixins';
 
 .outer-container {
   max-width: 64rem; /* 1024px */
   margin: 2rem auto 0;
   background-color: #fff;
-  border-radius: $global-radius;
+  border-radius: variables.$global-radius;
   padding: 1.25rem;
 }
 </style>

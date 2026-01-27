@@ -226,18 +226,18 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
+@use '@/assets/styles/variables';
 
 .list {
   align-items: flex-start;
 }
 
 .positive {
-  color: $green-600;
+  color: variables.$green-600;
 }
 
 .negative {
-  color: $red-600;
+  color: variables.$red-600;
 }
 
 .list-head {
@@ -318,13 +318,13 @@ defineExpose({
   margin-right: auto;
 }
 
-@media (min-width: $sm) {
+@media (min-width: variables.$sm) {
   .prop-title {
     flex-basis: 100%;
   }
 }
 
-@media (min-width: $xxl) {
+@media (min-width: variables.$xxl) {
   .list {
     display: block;
   }
@@ -339,7 +339,7 @@ defineExpose({
   }
 
   .list-footer {
-    color: $gray-400;
+    color: variables.$gray-400;
     padding-top: 0;
   }
 
