@@ -18,9 +18,7 @@ const getAllActiveDatasets = (state: StoreState): Dataset[] => {
   }, [] as Dataset[])
 }
 
-export const useStore = defineStore({
-  id: 'general',
-
+export const useStore = defineStore('general', {
   state: (): StoreState => ({
     alphavantage: {} as any,
     currentDate: new Date(),

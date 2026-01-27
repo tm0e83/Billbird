@@ -18,7 +18,7 @@ import '@/assets/styles/main.scss'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import Datepicker from '@vuepic/vue-datepicker'
+import { VueDatePicker } from '@vuepic/vue-datepicker'
 import ModalWindow from '@/components/ModalWindow.vue'
 import App from './App.vue'
 import router from './router'
@@ -44,7 +44,7 @@ app.use(router)
 app.use(Notifications)
 
 // components
-app.component('Datepicker', Datepicker)
+app.component('Datepicker', VueDatePicker)
 app.component('ModalWindow', ModalWindow)
 
 app.mount('#app')
