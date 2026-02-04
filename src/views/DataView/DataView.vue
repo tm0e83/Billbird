@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, toRaw } from 'vue'
 import { useStore } from '@/stores/store'
-import DatagroupList from '@/components/DatagroupList.vue'
-import EditDataset from '@/components/EditDataset.vue'
-import EditDatagroup from '@/components/EditDatagroup.vue'
-import DeleteDatagroup from '@/components/DeleteDatagroup.vue'
+import DatagroupList from '@/views/DataView/DatagroupList.vue'
+import EditDataset from '@/views/DataView/EditDataset.vue'
+import EditDatagroup from '@/views/DataView/EditDatagroup.vue'
+import DeleteDatagroup from '@/views/DataView/DeleteDatagroup.vue'
 import DropdownMenu from '@/components/DropdownMenu.vue'
 import { format } from 'date-fns'
 import {
@@ -345,6 +345,7 @@ function fillUpdateFields() {
 <style lang="scss" scoped>
 @use '@/assets/styles/variables';
 @use '@/assets/styles/mixins';
+@use "sass:color";
 
 body {
   overflow-y: scroll;
@@ -379,8 +380,8 @@ body {
     }
 
     &.info {
-      border-color: lighten(variables.$info-color, 40%);
-      background-color: lighten(rgba(variables.$info-color, 0.15), 40%);
+      border-color: color.adjust(variables.$info-color, $lightness: 40%);
+      background-color: color.adjust(rgba(variables.$info-color, 0.15), $lightness: 40%);
       color: variables.$info-color;
     }
   }

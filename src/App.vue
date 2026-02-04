@@ -8,7 +8,7 @@ import { getAuth, signOut } from 'firebase/auth'
 import { router, publicPages } from './router'
 import { LoginIcon, LogoutIcon, SettingsIcon } from 'vue-tabler-icons'
 import { notify } from '@kyvg/vue3-notification'
-import MainMenu from '@/components/MainMenu.vue'
+import MainMenu from './MainMenu.vue'
 
 const store = useStore()
 const auth = getAuth()

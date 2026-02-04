@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import { useStore } from '@/stores/store'
-import { toCurrency } from './shared/functions'
-import DatasetItem from '@/components/DatasetItem.vue'
-import EditDataset from '@/components/EditDataset.vue'
-import DeleteDataset from '@/components/DeleteDataset.vue'
+import { toCurrency } from '@/shared/functions.ts'
+import DatasetItem from '@/views/DataView/DatasetItem.vue'
+import EditDataset from '@/views/DataView/EditDataset.vue'
+import DeleteDataset from '@/views/DataView/DeleteDataset.vue'
 import { CheckIcon } from 'vue-tabler-icons'
 import draggable from 'vuedraggable'
 import type { Dataset } from '@/types/index.d'
@@ -274,9 +274,6 @@ defineExpose({
 .prop-invoice-date,
 .prop-interval {
   display: none;
-}
-
-.prop-update-amount {
 }
 
 .update-amount-inner {

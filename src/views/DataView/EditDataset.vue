@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { nextTick, reactive, ref, toRaw, watch } from 'vue'
+import { reactive, toRaw, watch } from 'vue'
 import { useStore } from '@/stores/store'
 import { format } from 'date-fns'
 import { de } from 'date-fns/locale'
-import CurrencyInput from '@/components/CurrencyInput.vue'
-import { SearchIcon } from 'vue-tabler-icons'
+import CurrencyInput from '@/views/DataView/CurrencyInput.vue'
 import type { Dataset } from '@/types/index.d'
 
 interface State {
@@ -17,17 +16,12 @@ const props = defineProps<{ dataset: Dataset }>()
 const emit = defineEmits<{
   close: []
 }>()
-const symbolSearchInput = ref<HTMLInputElement | null>(null)
-const symbolSearchResults = ref<Record<string, any>[]>([])
-const searchButtonDisabled = ref<boolean>(true)
 
 let data = Object.assign({}, toRaw(props.dataset))
 let state = reactive<State>({
   dataset: data,
   errors: []
 })
-
-let searchSymbolVisible = ref<boolean>(false)
 
 watch(
   () => props.dataset,
@@ -78,10 +72,6 @@ async function save() {
 function handleDate(invoiceDate) {
   state.dataset.invoiceDate = format(invoiceDate, 'yyyy-MM-dd')
 }
-
-function onSymbolSearchInput(e) {
-  searchButtonDisabled.value = e.target.value.trim().length === 0
-}
 </script>
 
 <template>
@@ -123,11 +113,11 @@ function onSymbolSearchInput(e) {
       <div v-if="state.dataset.type === 1">
         <div class="mb-4">
           <label for="ds-new-invoice-date">Rechnungsdatum</label>
-          <Datepicker
+          <VueDatePicker
             v-model="state.dataset.invoiceDate"
             @update:modelValue="handleDate"
             :enableTimePicker="false"
-            locale="de-DE"
+            :locale="de"
             :format-locale="de"
             format="dd.MM.yyyy"
             autoApply

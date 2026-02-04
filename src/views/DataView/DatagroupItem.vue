@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import { useStore } from '@/stores/store'
-import { toCurrency } from './shared/functions'
-import DatasetList from '@/components/DatasetList.vue'
+import { toCurrency } from '@/shared/functions.ts'
+import DatasetList from '@/views/DataView/DatasetList.vue'
 import { trimDecimals } from '@/utils/number'
 import {
   CheckIcon,

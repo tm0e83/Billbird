@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useStore } from '@/stores/store'
-import DatagroupItem from '@/components/DatagroupItem.vue'
-import { toCurrency } from './shared/functions'
+import DatagroupItem from '@/views/DataView/DatagroupItem.vue'
+import { toCurrency } from '../../shared/functions'
 import { CheckIcon } from 'vue-tabler-icons'
 import draggable from 'vuedraggable'
 import { trimDecimals } from '@/utils/number'

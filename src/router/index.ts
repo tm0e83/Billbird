@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, type Router, type RouteRecordRaw, type RouteLocationNormalized } from 'vue-router'
-import OverviewPage from '../views/OverviewPage.vue'
+import OverviewView from '../views/OverviewView/OverviewView.vue'
 import { useStore } from '@/stores/store'
 
 export const publicPages: string[] = ['/login', '/overview', '/faq']
@@ -12,17 +12,17 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/overview',
     name: 'overview',
-    component: OverviewPage
+    component: OverviewView
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/LoginPage.vue')
+    component: () => import('../views/LoginView/LoginView.vue')
   },
   {
     path: '/data',
     name: 'data',
-    component: () => import('../views/DataPage.vue')
+    component: () => import('../views/DataView/DataView.vue')
   },
   {
     path: '/faq',
