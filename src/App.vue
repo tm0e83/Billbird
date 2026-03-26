@@ -98,7 +98,6 @@ onMounted(() => {
   opacity: 0;
 }
 
-
 header {
   padding: 0.75rem;
   background-color: #fff;
@@ -201,5 +200,21 @@ header {
     background: #e54d42;
     border-left-color: #b82e24;
   }
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-4 {
+  gap: 1rem;
 }
 </style>
