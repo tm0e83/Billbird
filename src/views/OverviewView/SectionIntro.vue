@@ -27,13 +27,13 @@ function loginAsGuest(): void {
         monatlich die nötigen Beträge für Jahres- oder Quartalsrechnungen zurückzulegen.
       </p>
 
-      <p>Das Projekt befindet sich noch im Aufbau. Aktuell stelle ich das Projekt schrittweise auf TypeScript um, 
+      <p>Das Projekt befindet sich noch im Aufbau. Aktuell stelle ich das Projekt schrittweise auf TypeScript um,
         behebe diverse Fehlerchen und strukturiere die Komponenten neu. Eine ewige Baustelle. :-)</p>
 
       <br>
       <br>
-      
-      <div class="text-center">
+
+      <div class="d-flex justify-center">
         <button @click="loginAsGuest" class="button large d-flex">
           <span>Als Gast fortfahren</span>
           <ChevronRightIcon />

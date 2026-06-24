@@ -214,6 +214,10 @@ header {
   justify-content: center;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .gap-4 {
   gap: 1rem;
 }
