@@ -15,20 +15,19 @@ function loginAsGuest(): void {
 <template>
   <section class="intro text-xl">
     <div class="inner">
-      <Headerline>Was ist das hier?</Headerline>
+      <Headerline>Über BillBird</Headerline>
       <p>
-        BillBird ist ein privates Vue3-Testprojekt zum Verwalten meiner eigenen Finanzen. Es ist
-        Programmierspielwiese und nützliches Tool gleichermaßen, ausschließlich für den
-        Eigengebrauch gedacht und wird nebenbei als Showcase für Bewerbungen genutzt.
+        BillBird ist mein privates Finanztool, gebaut mit Vue 3, TypeScript, Pinia und Firebase.
+        Entstanden ist es, weil ich einen besseren Überblick über meine Ersparnisse wollte und
+        monatlich Rücklagen für Jahres- und Quartalsrechnungen planen muss.
       </p>
 
       <p>
-        Das Tool soll mir einen besseren Überblick über meine Ersparnisse geben und dabei helfen,
-        monatlich die nötigen Beträge für Jahres- oder Quartalsrechnungen zurückzulegen.
+        Gleichzeitig ist es mein Spielfeld zum Lernen: Ich baue das Projekt aktiv um, migriere
+        schrittweise auf TypeScript und probiere neue Patterns aus. Entsprechend dient es auch als
+        Showcase für Bewerbungen – mit allen Ecken und Kanten eines Projekts, das sich ständig
+        weiterentwickelt.
       </p>
-
-      <p>Das Projekt befindet sich noch im Aufbau. Aktuell stelle ich das Projekt schrittweise auf TypeScript um,
-        behebe diverse Fehlerchen und strukturiere die Komponenten neu. Eine ewige Baustelle. :-)</p>
 
       <br>
       <br>
