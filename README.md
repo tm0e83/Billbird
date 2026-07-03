@@ -2,4 +2,4 @@
 
 This tool is supposed to help me managing my finances.
 
-https://billbird.digitalsquares.de/
+http://billbird.digitalsquares.de/
